@@ -16,6 +16,7 @@
         <ul>
             <li><a href="index.html">Home</a></li>
             <li><a href="about.html">About Us</a></li>
+            <li><a href="work.html">Our Work</a></li>
             <li><a href="contact.html">Contact</a></li>
         </ul>
     </nav>
@@ -25,148 +26,97 @@
     <section class="contact">
         <h1>Contact Us</h1>
         
-        <div class="contact-grid">
-            <!-- Contact Form -->
-            <div class="contact-form-section">
-                <h2>Send us a Message</h2>
-                <form id="contact-form">
-                    <div class="form-group">
-                        <label for="name">Full Name</label>
-                        <input type="text" id="name" name="name" required placeholder="Your name">
+        <!-- Contact Information Only -->
+        <div class="contact-info-section">
+            <h2>Get in Touch</h2>
+            
+            <div class="contact-info-box">
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-envelope"></i>
                     </div>
-                    
-                    <div class="form-group">
-                        <label for="email">Email Address</label>
-                        <input type="email" id="email" name="email" required placeholder="your.email@example.com">
+                    <div class="contact-details">
+                        <h3>Email Us</h3>
+                        <a href="mailto:straightway.globalinstitute@gmail.com" class="contact-link">
+                            straightway.globalinstitute@gmail.com
+                        </a>
+                        <p>Response within 24 hours</p>
                     </div>
-                    
-                    <div class="form-group">
-                        <label for="phone">Phone Number (Optional)</label>
-                        <input type="tel" id="phone" name="phone" placeholder="+94 77 XXX XXXX">
+                </div>
+                
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-phone"></i>
                     </div>
-                    
-                    <div class="form-group">
-                        <label for="subject">Subject</label>
-                        <select id="subject" name="subject">
-                            <option value="">Select a topic</option>
-                            <option value="workshop">Workshop Inquiry</option>
-                            <option value="registration">Registration Question</option>
-                            <option value="custom">Custom Workshop Request</option>
-                            <option value="partnership">Partnership/Corporate</option>
-                            <option value="general">General Inquiry</option>
-                        </select>
+                    <div class="contact-details">
+                        <h3>Call Us</h3>
+                        <a href="tel:+94757089236" class="contact-link">+94 75 708 9236</a>
+                        <p>Mon-Fri, 9:00 AM - 5:00 PM</p>
                     </div>
-                    
-                    <div class="form-group">
-                        <label for="message">Your Message</label>
-                        <textarea id="message" name="message" rows="6" required placeholder="Tell us how we can help you..."></textarea>
+                </div>
+                
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-map-marker-alt"></i>
                     </div>
-                    
-                    <button type="submit" class="btn-submit">
-                        <i class="fas fa-paper-plane"></i> Send Message
-                    </button>
-                </form>
+                    <div class="contact-details">
+                        <h3>Our Location</h3>
+                        <p>No: 16 1/1, Ediriweera Avenue,<br>Dehiwala, Sri Lanka</p>
+                        <p class="note"><small>Note: Currently operating online; address is administrative base.</small></p>
+                    </div>
+                </div>
             </div>
             
-            <!-- Contact Information -->
-            <div class="contact-info-section">
-                <h2>Get in Touch</h2>
+            <!-- Social Media Links -->
+            <div class="social-media-section">
+                <h3>Connect With Us</h3>
+                <p>Follow us for updates on workshops, psychology tips, and more</p>
                 
-                <div class="contact-info-box">
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fas fa-envelope"></i>
-                        </div>
-                        <div class="contact-details">
-                            <h3>Email Us</h3>
-                            <a href="mailto:straightway.globalinstitute@gmail.com" class="contact-link">
-                                straightway.globalinstitute@gmail.com
-                            </a>
-                            <p>Response within 24 hours</p>
-                        </div>
-                    </div>
+                <div class="social-links">
+                    <a href="https://www.facebook.com/profile.php?id=61583594583858" target="_blank" class="social-link facebook">
+                        <i class="fab fa-facebook-f"></i>
+                        <span>Facebook</span>
+                    </a>
                     
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fas fa-phone"></i>
-                        </div>
-                        <div class="contact-details">
-                            <h3>Call Us</h3>
-                            <a href="tel:+94757089236" class="contact-link">+94 75 708 9236</a>
-                            <p>Mon-Fri, 9:00 AM - 5:00 PM</p>
-                        </div>
-                    </div>
+                    <a href="https://www.instagram.com/straightwayglobal?igsh=MXJzYmV2aGw2dGxjbA%3D%3D" target="_blank" class="social-link instagram">
+                        <i class="fab fa-instagram"></i>
+                        <span>Instagram</span>
+                    </a>
                     
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fas fa-map-marker-alt"></i>
-                        </div>
-                        <div class="contact-details">
-                            <h3>Our Location</h3>
-                            <p>No: 16 1/1, Ediriweera Avenue,<br>Dehiwala, Sri Lanka</p>
-                            <p class="note"><small>Note: Currently operating online; address is administrative base.</small></p>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Social Media Links -->
-                <div class="social-media-section">
-                    <h3>Connect With Us</h3>
-                    <p>Follow us for updates on workshops, psychology tips, and more</p>
-                    
-                    <div class="social-links">
-                        <a href="https://www.facebook.com/profile.php?id=61583594583858" target="_blank" class="social-link facebook">
-                            <i class="fab fa-facebook-f"></i>
-                            <span>Facebook</span>
-                        </a>
-                        
-                        <a href="https://www.instagram.com/straightwayglobal?igsh=MXJzYmV2aGw2dGxjbA%3D%3D" target="_blank" class="social-link instagram">
-                            <i class="fab fa-instagram"></i>
-                            <span>Instagram</span>
-                        </a>
-                        
-                        <a href="https://wa.me/94757089236?text=Hello%20StraightWay%20Global%20Institute!%20I%20have%20a%20question%20about%20your%20workshops." target="_blank" class="social-link whatsapp">
-                            <i class="fab fa-whatsapp"></i>
-                            <span>WhatsApp</span>
-                        </a>
-                        
-                        <a href="mailto:straightway.globalinstitute@gmail.com" class="social-link email">
-                            <i class="fas fa-envelope"></i>
-                            <span>Email</span>
-                        </a>
-
-                        <!-- LinkedIn -->
-                        <a href="https://www.linkedin.com/company/straightwayglobalinstitute/?trk=public_post_feed-actor-name" target="_blank" class="social-link linkedin">
-                            <i class="fab fa-linkedin-in"></i>
-                            <span>LinkedIn</span>
-                        </a>
-                    </div>
-
-                </div>
-                
-                <!-- WhatsApp Floating Button -->
-                <div class="whatsapp-float">
-                    <a href="https://wa.me/94757089236?text=Hello%20StraightWay%20Global%20Institute!%20I%20would%20like%20to%20know%20more%20about%20your%20workshops." target="_blank" class="whatsapp-btn">
+                    <a href="https://wa.me/94757089236?text=Hello%20StraightWay%20Global%20Institute!%20I%20have%20a%20question%20about%20your%20workshops." target="_blank" class="social-link whatsapp">
                         <i class="fab fa-whatsapp"></i>
-                        <span>Chat on WhatsApp</span>
+                        <span>WhatsApp</span>
+                    </a>
+                    
+                    <a href="mailto:straightway.globalinstitute@gmail.com" class="social-link email">
+                        <i class="fas fa-envelope"></i>
+                        <span>Email</span>
+                    </a>
+
+                    <a href="https://www.linkedin.com/company/straightwayglobalinstitute/?trk=public_post_feed-actor-name" target="_blank" class="social-link linkedin">
+                        <i class="fab fa-linkedin-in"></i>
+                        <span>LinkedIn</span>
                     </a>
                 </div>
-                
-                <!-- Quick Links -->
-                <div class="quick-links">
-                    <h3>Quick Information</h3>
-                    <ul>
-                        <li><i class="fas fa-check-circle"></i> Workshop schedules updated monthly</li>
-                        <li><i class="fas fa-check-circle"></i> Custom workshops available for organizations</li>
-                        <li><i class="fas fa-check-circle"></i> Certificate provided upon completion</li>
-                        <li><i class="fas fa-check-circle"></i> All sessions conducted online via Zoom</li>
-                    </ul>
-                </div>
+            </div>
+            
+            <!-- Quick Links -->
+            <div class="quick-links">
+                <h3>Quick Information</h3>
+                <ul>
+                    <li><i class="fas fa-check-circle"></i> Workshop schedules updated monthly</li>
+                    <li><i class="fas fa-check-circle"></i> Custom workshops available for organizations</li>
+                    <li><i class="fas fa-check-circle"></i> Certificate provided upon completion</li>
+                    <li><i class="fas fa-check-circle"></i> All sessions conducted online via Zoom</li>
+                </ul>
             </div>
         </div>
         
-        <!-- FAQ Section -->
-
+        <!-- Optional: Simple direct contact note -->
+        <div class="direct-contact-note">
+            <p>📧 Prefer email? Write to us directly at <strong>straightway.globalinstitute@gmail.com</strong></p>
+            <p>💬 Want to chat? Message us on <a href="https://wa.me/94757089236?text=Hello%20StraightWay%20Global%20Institute!" target="_blank">WhatsApp</a></p>
+        </div>
     </section>
 </main>
 

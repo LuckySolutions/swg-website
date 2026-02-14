@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Work - StraightWay Global Institute</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+<header>
+    <nav>
+        <div class="logo">StraightWay Global Institute</div>
+        <div class="tagline">Pathway To Purpose</div>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="work.html">Our Work</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+    <section class="work-page">
+        <h1>Our Work</h1>
+        <p class="page-subtitle">Explore our upcoming sessions and past workshops</p>
+
+        <!-- ========== FUTURE WORKSHOPS SECTION (NOW ON TOP) ========== -->
+        <section class="future-workshops">
+            <h2><i class="fas fa-calendar-alt"></i> Future Workshops</h2>
+            <p class="section-desc">Coming soon - Stay tuned!</p>
+            
+            <div class="workshops-grid" id="future-workshops-container">
+                <div class="no-workshops">
+                    <i class="fas fa-clock"></i>
+                    <p>No upcoming workshops scheduled yet.</p>
+                    <p class="small">Check back soon or <a href="contact.html">contact us</a> for updates.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== PAST WORKSHOPS SECTION (NOW BELOW FUTURE) ========== -->
+        <section class="past-workshops">
+            <h2><i class="fas fa-history"></i> Past Workshops</h2>
+            <p class="section-desc">Highlights from our completed successful sessions</p>
+            
+            <div class="workshops-grid" id="past-workshops-container">
+                <!-- Past Workshop 1 - Digital Mental Health -->
+                <div class="workshop-card past" data-workshop="digital-mental-health">
+                    <div class="workshop-gallery">
+                        <!-- Main/Gallery images -->
+                        <div class="gallery-main">
+                            <img src="assets/images/Workshop Poster.jpg" 
+                                 alt="Digital Mental Health Workshop - Main"
+                                 class="gallery-trigger"
+                                 onclick="openWorkshopModal('digital-mental-health', 1)">
+                        </div>
+                        
+                        <!-- Thumbnail strip -->
+                        <div class="gallery-thumbnails">
+                            <img src="assets/images/IMG_8140.JPG" 
+                                 alt="Workshop photo 2"
+                                 class="thumbnail"
+                                 onclick="openWorkshopModal('digital-mental-health', 2)">
+                            
+                            <div class="more-photos" onclick="openWorkshopModal('digital-mental-health', 1)">
+                                <span>+1</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="workshop-details">
+                        <h3>Digital Mental Health: Coping with Social Media Pressure</h3>
+                        <div class="workshop-meta">
+                            <p><i class="fas fa-calendar-alt"></i> <strong>Date:</strong> 7th February 2026</p>
+                            <p><i class="fas fa-user-tie"></i> <strong>Conducted by:</strong> Ms. Melani Hansika</p>
+                        </div>
+                        <p class="workshop-summary">
+                            An insightful session on managing digital wellness and social media impact on mental health.
+                        </p>
+                        <button onclick="openWorkshopModal('digital-mental-health', 1)" class="btn-view-gallery">
+                            <i class="fas fa-images"></i> View Gallery
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== WORKSHOP REQUEST SECTION ========== -->
+        <section class="workshop-request">
+            <div class="request-box">
+                <h3>Want a custom workshop for your organization?</h3>
+                <p>We design workshops tailored to your team's needs.</p>
+                <a href="contact.html" class="btn-request">
+                    <i class="fas fa-envelope"></i> Request a Workshop
+                </a>
+            </div>
+        </section>
+    </section>
+</main>
+
+<!-- ========== MODAL FOR WORKSHOP GALLERY ========== -->
+<div id="workshopModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal" onclick="closeModal()">&times;</span>
+        
+        <!-- Modal Header with Workshop Info -->
+        <div class="modal-header">
+            <h3 id="modalWorkshopTitle">Digital Mental Health Workshop</h3>
+            <p id="modalWorkshopMeta">7th February 2026 | Ms. Melani Hansika</p>
+        </div>
+        
+        <!-- Modal Gallery -->
+        <div class="modal-gallery-container">
+            <!-- Main Gallery Image -->
+            <div class="modal-main-image">
+                <img id="modalMainImage" src="" alt="Workshop Gallery Image">
+                
+                <!-- Navigation Arrows -->
+                <button class="modal-arrow prev" onclick="changeImage(-1)">&#10094;</button>
+                <button class="modal-arrow next" onclick="changeImage(1)">&#10095;</button>
+            </div>
+            
+            <!-- Thumbnail Strip -->
+            <div class="modal-thumbnails" id="modalThumbnails"></div>
+        </div>
+        
+        <!-- Modal Description/Information -->
+        <div class="modal-description">
+            <h4><i class="fas fa-info-circle"></i> About This Workshop</h4>
+            <p id="modalWorkshopDescription"></p>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <p>&copy; 2026 StraightWay Global Institute. All Rights Reserved.</p>
+    <p class="address">No: 16 1/1, Ediriweera Avenue, Dehiwala, Sri Lanka</p>
+    <div class="footer-social">
+        <a href="https://www.facebook.com/profile.php?id=61583594583858" target="_blank"><i class="fab fa-facebook"></i></a>
+        <a href="https://www.instagram.com/straightwayglobal?igsh=MXJzYmV2aGw2dGxjbA%3D%3D" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="https://wa.me/94757089236?text=Hello%20StraightWay%20Global%20Institute!" target="_blank"><i class="fab fa-whatsapp"></i></a>
+        <a href="mailto:straightway.globalinstitute@gmail.com"><i class="fas fa-envelope"></i></a>
+    </div>
+</footer>
+
+<script src="assets/js/script.js"></script>
+</body>
+</html>

@@ -210,3 +210,130 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
+// ==================== WORKSHOP GALLERY MODAL ====================
+// Workshop data - In a real app, this would come from a database
+const workshopData = {
+    'digital-mental-health': {
+        title: 'Digital Mental Health: Coping with Social Media Pressure',
+        date: '7th February 2026',
+        conductedBy: 'Ms. Melani Hansika',
+        description: `A big thank you to Ms. Melani for delivering an eye-opening workshop on “Digital Mental Health: Coping with Social Media Pressure”.<br><br>
+                     In a world where we're constantly connected, this session reminded us how important it is to set healthy boundaries, be mindful of our digital habits, and protect our mental well-being.<br><br>
+                     We truly appreciate Ms. Melani's engaging session and the valuable insights shared with our participants.`,
+        images: [
+            'assets/images/Workshop Poster.jpg',  // Changed to match your actual file
+            'assets/images/IMG_8140.JPG' ]
+    }
+    // Add more workshops here as needed
+};
+
+let currentWorkshop = null;
+let currentImageIndex = 0;
+
+// Function to open workshop modal
+window.openWorkshopModal = function(workshopId, imageIndex = 1) {
+    const workshop = workshopData[workshopId];
+    if (!workshop) return;
+    
+    currentWorkshop = workshopId;
+    currentImageIndex = imageIndex - 1; // Convert to 0-based index
+    
+    // Update modal content
+    document.getElementById('modalWorkshopTitle').textContent = workshop.title;
+    document.getElementById('modalWorkshopMeta').textContent = 
+        `${workshop.date} | ${workshop.conductedBy}`;
+    document.getElementById('modalWorkshopDescription').innerHTML = workshop.description;
+    
+    // Update main image
+    document.getElementById('modalMainImage').src = workshop.images[currentImageIndex];
+    
+    // Generate thumbnails
+    const thumbnailsContainer = document.getElementById('modalThumbnails');
+    thumbnailsContainer.innerHTML = '';
+    
+    workshop.images.forEach((imgSrc, index) => {
+        const thumb = document.createElement('img');
+        thumb.src = imgSrc;
+        thumb.classList.add('modal-thumb');
+        if (index === currentImageIndex) {
+            thumb.classList.add('active');
+        }
+        thumb.onclick = () => changeImageTo(index);
+        thumbnailsContainer.appendChild(thumb);
+    });
+    
+    // Show modal
+    document.getElementById('workshopModal').style.display = 'block';
+    document.body.style.overflow = 'hidden'; // Prevent background scrolling
+};
+
+// Function to change image (next/prev)
+window.changeImage = function(direction) {
+    const workshop = workshopData[currentWorkshop];
+    if (!workshop) return;
+    
+    currentImageIndex = (currentImageIndex + direction + workshop.images.length) % workshop.images.length;
+    
+    // Update main image
+    document.getElementById('modalMainImage').src = workshop.images[currentImageIndex];
+    
+    // Update active thumbnail
+    const thumbnails = document.querySelectorAll('.modal-thumb');
+    thumbnails.forEach((thumb, index) => {
+        if (index === currentImageIndex) {
+            thumb.classList.add('active');
+        } else {
+            thumb.classList.remove('active');
+        }
+    });
+};
+
+// Function to change to specific image
+window.changeImageTo = function(index) {
+    const workshop = workshopData[currentWorkshop];
+    if (!workshop) return;
+    
+    currentImageIndex = index;
+    document.getElementById('modalMainImage').src = workshop.images[currentImageIndex];
+    
+    const thumbnails = document.querySelectorAll('.modal-thumb');
+    thumbnails.forEach((thumb, i) => {
+        if (i === index) {
+            thumb.classList.add('active');
+        } else {
+            thumb.classList.remove('active');
+        }
+    });
+};
+
+// Function to close modal
+window.closeModal = function() {
+    const modal = document.getElementById('workshopModal');
+    if (modal) {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto'; // Restore scrolling
+    }
+};
+
+// Close modal if clicked outside
+window.onclick = function(event) {
+    const modal = document.getElementById('workshopModal');
+    if (event.target === modal) {
+        closeModal();
+    }
+};
+
+// Keyboard navigation for modal
+document.addEventListener('keydown', function(event) {
+    const modal = document.getElementById('workshopModal');
+    if (modal && modal.style.display === 'block') {
+        if (event.key === 'ArrowLeft') {
+            changeImage(-1);
+        } else if (event.key === 'ArrowRight') {
+            changeImage(1);
+        } else if (event.key === 'Escape') {
+            closeModal();
+        }
+    }
+});
