@@ -77,47 +77,96 @@ nav ul li a:hover {
    HERO SECTION
 ----------------------------- */
 .hero {
-    text-align: center;
-    padding: 100px 20px;
-    background: url('https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+    height: 65vh; /* full screen */
+    background: linear-gradient(135deg, #111, #333); /* blackish grey */
     color: #fff;
-    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.hero::after {
-    content: '';
-    position: absolute;
-    top:0; left:0; right:0; bottom:0;
-    background-color: rgba(0,0,0,0.5);
+.hero-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1200px;
+    width: 90%;
+    gap: 30px;
 }
 
-.hero h1 {
+/* Left text */
+.hero-text {
+    flex: 1;
+    text-align: left;
+}
+
+.hero-text h1 {
     font-size: 3rem;
     margin-bottom: 20px;
-    position: relative;
-    z-index: 1;
 }
 
-.hero p {
-    font-size: 1.3rem;
+.hero-text p {
+    font-size: 1.2rem;
     margin-bottom: 30px;
-    position: relative;
-    z-index: 1;
 }
 
-.hero .btn {
-    background-color: #ffd700;
-    color: #0d6efd;
+.hero-text .btn {
+    background-color: #6ab187;
+    color: #0a2647;
     padding: 12px 30px;
     border-radius: 5px;
     font-weight: bold;
-    transition: 0.3s;
-    position: relative;
-    z-index: 1;
 }
 
-.hero .btn:hover {
-    background-color: #e6c200;
+.hero-text .btn:hover {
+    background-color: #5a9e76;
+}
+
+/* Right logo */
+.hero-logo-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    height: 100%;            /* make container full height of hero */
+
+}
+
+@keyframes floatLogo {
+    0%   { transform: translateY(0) scale(1); }
+    50%  { transform: translateY(-10px) scale(1.05); }
+    100% { transform: translateY(0) scale(1); }
+}
+
+.hero-logo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    animation: floatLogo 6s ease-in-out infinite; /* slow float effect */
+opacity: 0;
+    animation: fadeIn 1.5s ease forwards, floatLogo 6s ease-in-out infinite;
+}
+
+@keyframes fadeIn {
+    to { opacity: 1; }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .hero-content {
+        flex-direction: column;
+        text-align: center;
+    }
+    .hero-logo-container {
+        justify-content: center;
+        margin-top: 30px;
+    }
+    .hero-text h1 {
+        font-size: 2rem;
+    }
+    .hero-text p {
+        font-size: 1rem;
+    }
 }
 
 /* -----------------------------
@@ -1431,3 +1480,13 @@ footer {
         max-width: 150px;
     }
 }
+
+.social-link.linkedin {
+    background-color: #0077B5; /* LinkedIn blue */
+    color: #fff;
+}
+
+.social-link.linkedin:hover {
+    background-color: #005582;
+}
+
