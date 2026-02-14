@@ -1356,3 +1356,78 @@ footer {
     color: #6ab187; /* Olive Green */
     font-weight: bold;
 }
+
+.team-member {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    margin-bottom: 50px;
+    padding: 25px;
+    background: #f9f9f9;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+}
+
+.team-photo {
+    width: 220px;
+    height: 260px;      /* portrait friendly */
+    object-fit: cover;
+    object-position: center top;
+    border-radius: 12px;
+}
+
+
+.team-info {
+    flex: 1;
+}
+
+.team-info .name {
+    font-weight: bold;
+    margin-bottom: 8px;
+    font-size: 18px;
+}
+
+@media (max-width: 768px) {
+    .team-member {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+
+/* ================= CPD SECTION ================= */
+
+.cpd-approved {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+    margin: 30px 0;
+    padding: 20px 25px;
+    background-color: #eef5ff;
+    border-left: 5px solid #003366;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+
+}
+
+.cpd-text {
+    flex: 1;
+    font-size: 16px;
+}
+
+.cpd-logo img {
+    max-width: 250px;  /* Adjust if needed */
+    height: auto;
+}
+
+@media (max-width: 768px) {
+    .cpd-approved {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .cpd-logo img {
+        max-width: 150px;
+    }
+}
