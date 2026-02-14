@@ -19,4 +19,4 @@ Static site. Can be deployed on:
 - Shared hosting
 - cPanel
 
-Maintained by: Your Brand Name
+Maintained by: Lucky solutions
