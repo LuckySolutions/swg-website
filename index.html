@@ -234,11 +234,50 @@
         </div>
     </section>
 </main>
-
 <footer>
-    <p>&copy; 2026 StraightWay Global Institute. All Rights Reserved.</p>
-    <p class="address">No: 16 1/1, Ediriweera Avenue, Dehiwala, Sri Lanka</p>
+    <p id="copyright-text"></p>
+    <p class="address" id="footer-address"></p>
+    <div class="footer-social" id="footer-social"></div>
 </footer>
+
+<!-- Add Supabase client library -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="assets/js/supabase-config.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', async function() {
+        try {
+            const { data, error } = await supabase
+                .from('site_settings')
+                .select('contact_email, contact_address, facebook_url, instagram_url, whatsapp_url, linkedin_url, copyright_text')
+                .eq('id', 1)
+                .single();
+            
+            if (error) throw error;
+            
+            // Update footer
+            document.getElementById('copyright-text').textContent = data.copyright_text || '© 2026 StraightWay Global Institute. All Rights Reserved.';
+            document.getElementById('footer-address').innerHTML = data.contact_address;
+            
+            // Footer social icons
+            const socialLinks = [];
+            if (data.facebook_url) socialLinks.push({ url: data.facebook_url, icon: 'fab fa-facebook' });
+            if (data.instagram_url) socialLinks.push({ url: data.instagram_url, icon: 'fab fa-instagram' });
+            if (data.whatsapp_url) socialLinks.push({ url: data.whatsapp_url, icon: 'fab fa-whatsapp' });
+            if (data.linkedin_url) socialLinks.push({ url: data.linkedin_url, icon: 'fab fa-linkedin' });
+            
+            // Add email
+            socialLinks.push({ url: `mailto:${data.contact_email}`, icon: 'fas fa-envelope' });
+            
+            document.getElementById('footer-social').innerHTML = socialLinks.map(social => 
+                `<a href="${social.url}" target="_blank"><i class="${social.icon}"></i></a>`
+            ).join('');
+            
+        } catch (error) {
+            console.error('Error loading footer:', error);
+        }
+    });
+</script>
 
 <script src="assets/js/script.js"></script>
 </body>

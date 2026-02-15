@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Site Settings</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .admin-container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        .admin-form {
+            background: #f9f9f9;
+            padding: 30px;
+            border-radius: 10px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .btn-save {
+            background: #4CAF50;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .btn-save:hover {
+            background: #45a049;
+        }
+        .login-form {
+            max-width: 400px;
+            margin: 100px auto;
+            padding: 30px;
+            background: #f9f9f9;
+            border-radius: 10px;
+        }
+        .hidden { display: none; }
+        .nav-links {
+            margin-bottom: 20px;
+            padding: 10px;
+            background: #f0f0f0;
+            border-radius: 5px;
+        }
+        .nav-links a {
+            margin-right: 20px;
+            color: #0a2647;
+            text-decoration: none;
+        }
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<div id="login-form" class="login-form">
+    <h2>Admin Login</h2>
+    <div class="form-group">
+        <label>Username</label>
+        <input type="text" id="username" placeholder="admin">
+    </div>
+    <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="password" placeholder="••••••••">
+    </div>
+    <button onclick="login()" class="btn-save">Login</button>
+</div>
+
+<div id="admin-panel" class="admin-container hidden">
+    <div class="admin-header">
+        <h2>Site Settings</h2>
+        <button onclick="logout()" style="background: #f44336; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer;">Logout</button>
+    </div>
+    
+    <div class="nav-links">
+        <a href="index.html" target="_blank"><i class="fas fa-home"></i> Home</a>
+        <a href="about.html" target="_blank"><i class="fas fa-info-circle"></i> About</a>
+        <a href="work.html" target="_blank"><i class="fas fa-briefcase"></i> Our Work</a>
+        <a href="contact.html" target="_blank"><i class="fas fa-envelope"></i> Contact</a>
+    </div>
+    
+    <form id="settings-form" class="admin-form">
+        <h3>Contact Information</h3>
+        <div class="form-group">
+            <label>Email *</label>
+            <input type="email" id="contact_email" required>
+        </div>
+        
+        <div class="form-group">
+            <label>Phone *</label>
+            <input type="text" id="contact_phone" required>
+        </div>
+        
+        <div class="form-group">
+            <label>Address *</label>
+            <textarea id="contact_address" rows="2" required></textarea>
+        </div>
+        
+        <div class="form-group">
+            <label>Address Note</label>
+            <input type="text" id="address_note">
+        </div>
+        
+        <div class="form-group">
+            <label>Business Hours</label>
+            <input type="text" id="business_hours">
+        </div>
+        
+        <h3>Social Media</h3>
+        <div class="form-group">
+            <label>Facebook URL</label>
+            <input type="url" id="facebook_url">
+        </div>
+        
+        <div class="form-group">
+            <label>Instagram URL</label>
+            <input type="url" id="instagram_url">
+        </div>
+        
+        <div class="form-group">
+            <label>WhatsApp URL</label>
+            <input type="url" id="whatsapp_url">
+        </div>
+        
+        <div class="form-group">
+            <label>LinkedIn URL</label>
+            <input type="url" id="linkedin_url">
+        </div>
+        
+        <h3>Footer</h3>
+        <div class="form-group">
+            <label>Copyright Text</label>
+            <input type="text" id="copyright_text">
+        </div>
+        
+        <button type="submit" class="btn-save">Save Changes</button>
+    </form>
+</div>
+
+<!-- For local development only - remove this in production? Actually keep it, it will be ignored by git -->
+<script src="assets/js/config.js"></script>
+
+<!-- Environment variables for Vercel -->
+<script>
+    window.env = {
+        VITE_SUPABASE_URL: '%VITE_SUPABASE_URL%',
+        VITE_SUPABASE_ANON_KEY: '%VITE_SUPABASE_ANON_KEY%'
+    }
+</script>
+
+<script type="module">
+    import { supabase } from './assets/js/supabase.js'
+    
+    // Simple login
+    window.login = function() {
+        const user = document.getElementById('username').value
+        const pass = document.getElementById('password').value
+        if (user === 'admin' && pass === 'admin123') {
+            document.getElementById('login-form').classList.add('hidden')
+            document.getElementById('admin-panel').classList.remove('hidden')
+            loadSettings()
+        } else {
+            alert('Invalid credentials')
+        }
+    }
+    
+    window.logout = function() {
+        document.getElementById('login-form').classList.remove('hidden')
+        document.getElementById('admin-panel').classList.add('hidden')
+    }
+    
+    async function loadSettings() {
+        const { data, error } = await supabase
+            .from('site_settings')
+            .select('*')
+            .eq('id', 1)
+            .single()
+        
+        if (error) {
+            alert('Error loading: ' + error.message)
+            return
+        }
+        
+        document.getElementById('contact_email').value = data.contact_email || ''
+        document.getElementById('contact_phone').value = data.contact_phone || ''
+        document.getElementById('contact_address').value = data.contact_address || ''
+        document.getElementById('address_note').value = data.address_note || ''
+        document.getElementById('business_hours').value = data.business_hours || ''
+        document.getElementById('facebook_url').value = data.facebook_url || ''
+        document.getElementById('instagram_url').value = data.instagram_url || ''
+        document.getElementById('whatsapp_url').value = data.whatsapp_url || ''
+        document.getElementById('linkedin_url').value = data.linkedin_url || ''
+        document.getElementById('copyright_text').value = data.copyright_text || ''
+    }
+    
+    document.getElementById('settings-form').addEventListener('submit', async (e) => {
+        e.preventDefault()
+        
+        const settings = {
+            contact_email: document.getElementById('contact_email').value,
+            contact_phone: document.getElementById('contact_phone').value,
+            contact_address: document.getElementById('contact_address').value,
+            address_note: document.getElementById('address_note').value,
+            business_hours: document.getElementById('business_hours').value,
+            facebook_url: document.getElementById('facebook_url').value,
+            instagram_url: document.getElementById('instagram_url').value,
+            whatsapp_url: document.getElementById('whatsapp_url').value,
+            linkedin_url: document.getElementById('linkedin_url').value,
+            copyright_text: document.getElementById('copyright_text').value
+        }
+        
+        console.log('Saving:', settings)  // ✅ Check what's being sent
+        
+        const { data, error } = await supabase
+            .from('site_settings')
+            .update(settings)
+            .eq('id', 1)
+            .select()  // ✅ Add this to return updated data
+        
+        console.log('Response:', { data, error })  // ✅ Check the response
+        
+        if (error) {
+            alert('❌ Error: ' + error.message + '\nCheck console for details')
+            console.error('Full error:', error)
+        } else {
+            alert('✅ Saved! Refreshing data...')
+            await loadSettings()
+        }
+    })
+</script>
+
+</body>
+</html>

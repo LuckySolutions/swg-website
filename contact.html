@@ -26,81 +26,20 @@
     <section class="contact">
         <h1>Contact Us</h1>
         
-        <!-- Contact Information Only -->
         <div class="contact-info-section">
-            <h2>Get in Touch</h2>
             
-            <div class="contact-info-box">
-                <div class="contact-item">
-                    <div class="contact-icon">
-                        <i class="fas fa-envelope"></i>
-                    </div>
-                    <div class="contact-details">
-                        <h3>Email Us</h3>
-                        <a href="mailto:straightway.globalinstitute@gmail.com" class="contact-link">
-                            straightway.globalinstitute@gmail.com
-                        </a>
-                        <p>Response within 24 hours</p>
-                    </div>
-                </div>
-                
-                <div class="contact-item">
-                    <div class="contact-icon">
-                        <i class="fas fa-phone"></i>
-                    </div>
-                    <div class="contact-details">
-                        <h3>Call Us</h3>
-                        <a href="tel:+94757089236" class="contact-link">+94 75 708 9236</a>
-                        <p>Mon-Fri, 9:00 AM - 5:00 PM</p>
-                    </div>
-                </div>
-                
-                <div class="contact-item">
-                    <div class="contact-icon">
-                        <i class="fas fa-map-marker-alt"></i>
-                    </div>
-                    <div class="contact-details">
-                        <h3>Our Location</h3>
-                        <p>No: 16 1/1, Ediriweera Avenue,<br>Dehiwala, Sri Lanka</p>
-                        <p class="note"><small>Note: Currently operating online; address is administrative base.</small></p>
-                    </div>
-                </div>
+            <div class="contact-info-box" id="contact-info-container">
+                <div class="loading">Loading contact information...</div>
             </div>
             
-            <!-- Social Media Links -->
             <div class="social-media-section">
                 <h3>Connect With Us</h3>
                 <p>Follow us for updates on workshops, psychology tips, and more</p>
-                
-                <div class="social-links">
-                    <a href="https://www.facebook.com/profile.php?id=61583594583858" target="_blank" class="social-link facebook">
-                        <i class="fab fa-facebook-f"></i>
-                        <span>Facebook</span>
-                    </a>
-                    
-                    <a href="https://www.instagram.com/straightwayglobal?igsh=MXJzYmV2aGw2dGxjbA%3D%3D" target="_blank" class="social-link instagram">
-                        <i class="fab fa-instagram"></i>
-                        <span>Instagram</span>
-                    </a>
-                    
-                    <a href="https://wa.me/94757089236?text=Hello%20StraightWay%20Global%20Institute!%20I%20have%20a%20question%20about%20your%20workshops." target="_blank" class="social-link whatsapp">
-                        <i class="fab fa-whatsapp"></i>
-                        <span>WhatsApp</span>
-                    </a>
-                    
-                    <a href="mailto:straightway.globalinstitute@gmail.com" class="social-link email">
-                        <i class="fas fa-envelope"></i>
-                        <span>Email</span>
-                    </a>
-
-                    <a href="https://www.linkedin.com/company/straightwayglobalinstitute/?trk=public_post_feed-actor-name" target="_blank" class="social-link linkedin">
-                        <i class="fab fa-linkedin-in"></i>
-                        <span>LinkedIn</span>
-                    </a>
+                <div class="social-links" id="social-links-container">
+                    <div class="loading">Loading social media links...</div>
                 </div>
             </div>
             
-            <!-- Quick Links -->
             <div class="quick-links">
                 <h3>Quick Information</h3>
                 <ul>
@@ -112,25 +51,108 @@
             </div>
         </div>
         
-        <!-- Optional: Simple direct contact note -->
-        <div class="direct-contact-note">
-            <p>📧 Prefer email? Write to us directly at <strong>straightway.globalinstitute@gmail.com</strong></p>
-            <p>💬 Want to chat? Message us on <a href="https://wa.me/94757089236?text=Hello%20StraightWay%20Global%20Institute!" target="_blank">WhatsApp</a></p>
-        </div>
+        <div class="direct-contact-note" id="direct-contact-note"></div>
     </section>
 </main>
 
 <footer>
-    <p>&copy; 2026 StraightWay Global Institute. All Rights Reserved.</p>
-    <p class="address">No: 16 1/1, Ediriweera Avenue, Dehiwala, Sri Lanka</p>
-    <div class="footer-social">
-        <a href="https://www.facebook.com/profile.php?id=61583594583858" target="_blank"><i class="fab fa-facebook"></i></a>
-        <a href="https://www.instagram.com/straightwayglobal?igsh=MXJzYmV2aGw2dGxjbA%3D%3D" target="_blank"><i class="fab fa-instagram"></i></a>
-        <a href="https://wa.me/94757089236?text=Hello%20StraightWay%20Global%20Institute!" target="_blank"><i class="fab fa-whatsapp"></i></a>
-        <a href="mailto:straightway.globalinstitute@gmail.com"><i class="fas fa-envelope"></i></a>
-    </div>
+    <p id="copyright-text"></p>
+    <p class="address" id="footer-address"></p>
+    <div class="footer-social" id="footer-social"></div>
 </footer>
 
-<script src="assets/js/script.js"></script>
+<script src="assets/js/config.js"></script>
+
+
+<script>
+    window.env = {
+        VITE_SUPABASE_URL: '%VITE_SUPABASE_URL%',
+        VITE_SUPABASE_ANON_KEY: '%VITE_SUPABASE_ANON_KEY%'
+    }
+</script>
+
+<script type="module">
+    import { supabase } from './assets/js/supabase.js'
+    
+    async function loadSiteSettings() {
+        try {
+            const { data, error } = await supabase
+                .from('site_settings')
+                .select('*')
+                .eq('id', 1)
+                .single()
+            
+            if (error) throw error
+            
+            // Contact Info
+            document.getElementById('contact-info-container').innerHTML = `
+                <div class="contact-item">
+                    <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+                    <div class="contact-details">
+                        <h3>Email Us</h3>
+                        <a href="mailto:${data.contact_email}">${data.contact_email}</a>
+                        <p>Response within 24 hours</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon"><i class="fas fa-phone"></i></div>
+                    <div class="contact-details">
+                        <h3>Call Us</h3>
+                        <a href="tel:${data.contact_phone}">${data.contact_phone}</a>
+                        <p>${data.business_hours}</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+                    <div class="contact-details">
+                        <h3>Our Location</h3>
+                        <p>${data.contact_address.replace(/,/g, '<br>')}</p>
+                        <p class="note"><small>${data.address_note}</small></p>
+                    </div>
+                </div>
+            `
+            
+            // Social Links
+            const socialLinks = []
+            if (data.facebook_url) socialLinks.push({ name: 'Facebook', url: data.facebook_url, icon: 'fab fa-facebook-f', class: 'facebook' })
+            if (data.instagram_url) socialLinks.push({ name: 'Instagram', url: data.instagram_url, icon: 'fab fa-instagram', class: 'instagram' })
+            if (data.whatsapp_url) socialLinks.push({ name: 'WhatsApp', url: data.whatsapp_url, icon: 'fab fa-whatsapp', class: 'whatsapp' })
+            if (data.linkedin_url) socialLinks.push({ name: 'LinkedIn', url: data.linkedin_url, icon: 'fab fa-linkedin-in', class: 'linkedin' })
+            socialLinks.push({ name: 'Email', url: `mailto:${data.contact_email}`, icon: 'fas fa-envelope', class: 'email' })
+            
+            document.getElementById('social-links-container').innerHTML = socialLinks.map(s => 
+                `<a href="${s.url}" target="_blank" class="social-link ${s.class}"><i class="${s.icon}"></i><span>${s.name}</span></a>`
+            ).join('')
+            
+            // Footer
+            document.getElementById('copyright-text').textContent = data.copyright_text
+            document.getElementById('footer-address').innerHTML = data.contact_address
+            
+            const footerIcons = socialLinks.map(s => {
+                let icon = s.icon
+                if (s.name === 'Facebook') icon = 'fab fa-facebook'
+                if (s.name === 'Instagram') icon = 'fab fa-instagram'
+                if (s.name === 'WhatsApp') icon = 'fab fa-whatsapp'
+                if (s.name === 'LinkedIn') icon = 'fab fa-linkedin'
+                if (s.name === 'Email') icon = 'fas fa-envelope'
+                return `<a href="${s.url}" target="_blank"><i class="${icon}"></i></a>`
+            }).join('')
+            document.getElementById('footer-social').innerHTML = footerIcons
+            
+            // Direct contact note
+            document.getElementById('direct-contact-note').innerHTML = `
+                <p>📧 Email: <strong>${data.contact_email}</strong></p>
+                <p>💬 <a href="${data.whatsapp_url}" target="_blank">Chat on WhatsApp</a></p>
+            `
+            
+        } catch (error) {
+            console.error('Error:', error)
+            document.getElementById('contact-info-container').innerHTML = '<p class="error">Error loading contact information</p>'
+        }
+    }
+    
+    loadSiteSettings()
+</script>
+
 </body>
 </html>
