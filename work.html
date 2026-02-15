@@ -27,68 +27,21 @@
         <h1>Our Work</h1>
         <p class="page-subtitle">Explore our upcoming sessions and past workshops</p>
 
-        <!-- ========== FUTURE WORKSHOPS SECTION (NOW ON TOP) ========== -->
+        <!-- FUTURE WORKSHOPS -->
         <section class="future-workshops">
             <h2><i class="fas fa-calendar-alt"></i> Future Workshops</h2>
             <p class="section-desc">Coming soon - Stay tuned!</p>
-            
-            <div class="workshops-grid" id="future-workshops-container">
-                <div class="no-workshops">
-                    <i class="fas fa-clock"></i>
-                    <p>No upcoming workshops scheduled yet.</p>
-                    <p class="small">Check back soon or <a href="contact.html">contact us</a> for updates.</p>
-                </div>
-            </div>
+            <div class="workshops-grid" id="future-workshops-container"></div>
         </section>
 
-        <!-- ========== PAST WORKSHOPS SECTION (NOW BELOW FUTURE) ========== -->
+        <!-- PAST WORKSHOPS -->
         <section class="past-workshops">
             <h2><i class="fas fa-history"></i> Past Workshops</h2>
             <p class="section-desc">Highlights from our completed successful sessions</p>
-            
-            <div class="workshops-grid" id="past-workshops-container">
-                <!-- Past Workshop 1 - Digital Mental Health -->
-                <div class="workshop-card past" data-workshop="digital-mental-health">
-                    <div class="workshop-gallery">
-                        <!-- Main/Gallery images -->
-                        <div class="gallery-main">
-                            <img src="assets/images/Workshop Poster.jpg" 
-                                 alt="Digital Mental Health Workshop - Main"
-                                 class="gallery-trigger"
-                                 onclick="openWorkshopModal('digital-mental-health', 1)">
-                        </div>
-                        
-                        <!-- Thumbnail strip -->
-                        <div class="gallery-thumbnails">
-                            <img src="assets/images/IMG_8140.JPG" 
-                                 alt="Workshop photo 2"
-                                 class="thumbnail"
-                                 onclick="openWorkshopModal('digital-mental-health', 2)">
-                            
-                            <div class="more-photos" onclick="openWorkshopModal('digital-mental-health', 1)">
-                                <span>+1</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="workshop-details">
-                        <h3>Digital Mental Health: Coping with Social Media Pressure</h3>
-                        <div class="workshop-meta">
-                            <p><i class="fas fa-calendar-alt"></i> <strong>Date:</strong> 7th February 2026</p>
-                            <p><i class="fas fa-user-tie"></i> <strong>Conducted by:</strong> Ms. Melani Hansika</p>
-                        </div>
-                        <p class="workshop-summary">
-                            An insightful session on managing digital wellness and social media impact on mental health.
-                        </p>
-                        <button onclick="openWorkshopModal('digital-mental-health', 1)" class="btn-view-gallery">
-                            <i class="fas fa-images"></i> View Gallery
-                        </button>
-                    </div>
-                </div>
-            </div>
+            <div class="workshops-grid" id="past-workshops-container"></div>
         </section>
 
-        <!-- ========== WORKSHOP REQUEST SECTION ========== -->
+        <!-- WORKSHOP REQUEST -->
         <section class="workshop-request">
             <div class="request-box">
                 <h3>Want a custom workshop for your organization?</h3>
@@ -101,33 +54,22 @@
     </section>
 </main>
 
-<!-- ========== MODAL FOR WORKSHOP GALLERY ========== -->
+<!-- MODAL FOR WORKSHOP GALLERY -->
 <div id="workshopModal" class="modal">
     <div class="modal-content">
         <span class="close-modal" onclick="closeModal()">&times;</span>
-        
-        <!-- Modal Header with Workshop Info -->
         <div class="modal-header">
-            <h3 id="modalWorkshopTitle">Digital Mental Health Workshop</h3>
-            <p id="modalWorkshopMeta">7th February 2026 | Ms. Melani Hansika</p>
+            <h3 id="modalWorkshopTitle"></h3>
+            <p id="modalWorkshopMeta"></p>
         </div>
-        
-        <!-- Modal Gallery -->
         <div class="modal-gallery-container">
-            <!-- Main Gallery Image -->
             <div class="modal-main-image">
                 <img id="modalMainImage" src="" alt="Workshop Gallery Image">
-                
-                <!-- Navigation Arrows -->
                 <button class="modal-arrow prev" onclick="changeImage(-1)">&#10094;</button>
                 <button class="modal-arrow next" onclick="changeImage(1)">&#10095;</button>
             </div>
-            
-            <!-- Thumbnail Strip -->
             <div class="modal-thumbnails" id="modalThumbnails"></div>
         </div>
-        
-        <!-- Modal Description/Information -->
         <div class="modal-description">
             <h4><i class="fas fa-info-circle"></i> About This Workshop</h4>
             <p id="modalWorkshopDescription"></p>
@@ -136,16 +78,215 @@
 </div>
 
 <footer>
-    <p>&copy; 2026 StraightWay Global Institute. All Rights Reserved.</p>
-    <p class="address">No: 16 1/1, Ediriweera Avenue, Dehiwala, Sri Lanka</p>
-    <div class="footer-social">
-        <a href="https://www.facebook.com/profile.php?id=61583594583858" target="_blank"><i class="fab fa-facebook"></i></a>
-        <a href="https://www.instagram.com/straightwayglobal?igsh=MXJzYmV2aGw2dGxjbA%3D%3D" target="_blank"><i class="fab fa-instagram"></i></a>
-        <a href="https://wa.me/94757089236?text=Hello%20StraightWay%20Global%20Institute!" target="_blank"><i class="fab fa-whatsapp"></i></a>
-        <a href="mailto:straightway.globalinstitute@gmail.com"><i class="fas fa-envelope"></i></a>
-    </div>
+    <p id="copyright-text"></p>
+    <p class="address" id="footer-address"></p>
+    <div class="footer-social" id="footer-social"></div>
 </footer>
 
-<script src="assets/js/script.js"></script>
+<!-- For local development -->
+<script>
+    if (window.location.hostname === 'localhost') {
+        document.write('<script src="assets/js/config.js"><\/script>');
+    }
+</script>
+
+<script type="module">
+    import { supabase } from './assets/js/supabase.js'
+    
+    let currentWorkshop = null;
+    let currentImageIndex = 0;
+    let workshopsData = {};
+    
+    // Load workshops
+    async function loadWorkshops() {
+        const { data, error } = await supabase
+            .from('workshops')
+            .select('*')
+            .order('display_order', { ascending: true });
+        
+        if (error) {
+            console.error('Error loading workshops:', error);
+            return;
+        }
+        
+        // Store data for modal
+        workshopsData = {};
+        data.forEach(w => { workshopsData[w.id] = w; });
+        
+        // Split by status
+        const future = data.filter(w => w.status === 'upcoming');
+        const past = data.filter(w => w.status === 'completed');
+        
+        // Render future workshops
+        const futureContainer = document.getElementById('future-workshops-container');
+        if (future.length === 0) {
+            futureContainer.innerHTML = `
+                <div class="no-workshops">
+                    <i class="fas fa-clock"></i>
+                    <p>No upcoming workshops scheduled yet.</p>
+                    <p class="small">Check back soon or <a href="contact.html">contact us</a> for updates.</p>
+                </div>
+            `;
+        } else {
+            futureContainer.innerHTML = future.map(w => renderWorkshopCard(w)).join('');
+        }
+        
+        // Render past workshops
+        const pastContainer = document.getElementById('past-workshops-container');
+        if (past.length === 0) {
+            pastContainer.innerHTML = `
+                <div class="no-workshops">
+                    <i class="fas fa-history"></i>
+                    <p>No past workshops yet.</p>
+                </div>
+            `;
+        } else {
+            pastContainer.innerHTML = past.map(w => renderWorkshopCard(w)).join('');
+        }
+    }
+    
+    // Render workshop card
+    function renderWorkshopCard(workshop) {
+        const images = workshop.image_urls || [];
+        const mainImage = images[0] || 'https://via.placeholder.com/400x300?text=No+Image';
+        
+        return `
+            <div class="workshop-card ${workshop.status}" data-workshop="${workshop.id}">
+                <div class="workshop-gallery">
+                    <div class="gallery-main">
+                        <img src="${mainImage}" alt="${workshop.title}" onclick="window.openWorkshopModal(${workshop.id}, 1)">
+                    </div>
+                    ${images.length > 1 ? `
+                        <div class="gallery-thumbnails">
+                            ${images.slice(1, 4).map((img, idx) => `
+                                <img src="${img}" class="thumbnail" onclick="window.openWorkshopModal(${workshop.id}, ${idx + 2})">
+                            `).join('')}
+                            ${images.length > 4 ? `
+                                <div class="more-photos" onclick="window.openWorkshopModal(${workshop.id}, 1)">
+                                    <span>+${images.length - 4}</span>
+                                </div>
+                            ` : ''}
+                        </div>
+                    ` : ''}
+                </div>
+                <div class="workshop-details">
+                    <h3>${workshop.title}</h3>
+                    <div class="workshop-meta">
+                        <p><i class="fas fa-calendar-alt"></i> <strong>Date:</strong> ${workshop.date}</p>
+                        <p><i class="fas fa-user-tie"></i> <strong>Conducted by:</strong> ${workshop.conducted_by}</p>
+                    </div>
+                    <p class="workshop-summary">${workshop.description.substring(0, 100)}${workshop.description.length > 100 ? '...' : ''}</p>
+                    <button onclick="window.openWorkshopModal(${workshop.id}, 1)" class="btn-view-gallery">
+                        <i class="fas fa-images"></i> View Gallery
+                    </button>
+                </div>
+            </div>
+        `;
+    }
+    
+    // Modal functions
+    window.openWorkshopModal = function(workshopId, imageIndex = 1) {
+        const workshop = workshopsData[workshopId];
+        if (!workshop) return;
+        
+        currentWorkshop = workshopId;
+        currentImageIndex = imageIndex - 1;
+        
+        document.getElementById('modalWorkshopTitle').textContent = workshop.title;
+        document.getElementById('modalWorkshopMeta').textContent = 
+            `${workshop.date} | ${workshop.conducted_by}`;
+        document.getElementById('modalWorkshopDescription').innerHTML = workshop.description;
+        
+        const images = workshop.image_urls || [];
+        document.getElementById('modalMainImage').src = images[currentImageIndex] || 'https://via.placeholder.com/800x600?text=No+Image';
+        
+        const thumbnailsContainer = document.getElementById('modalThumbnails');
+        thumbnailsContainer.innerHTML = '';
+        
+        images.forEach((imgSrc, index) => {
+            const thumb = document.createElement('img');
+            thumb.src = imgSrc;
+            thumb.classList.add('modal-thumb');
+            if (index === currentImageIndex) thumb.classList.add('active');
+            thumb.onclick = () => changeImageTo(index);
+            thumbnailsContainer.appendChild(thumb);
+        });
+        
+        document.getElementById('workshopModal').style.display = 'block';
+        document.body.style.overflow = 'hidden';
+    };
+    
+    window.changeImage = function(direction) {
+        const workshop = workshopsData[currentWorkshop];
+        if (!workshop) return;
+        const images = workshop.image_urls || [];
+        if (images.length === 0) return;
+        
+        currentImageIndex = (currentImageIndex + direction + images.length) % images.length;
+        document.getElementById('modalMainImage').src = images[currentImageIndex];
+        
+        document.querySelectorAll('.modal-thumb').forEach((thumb, index) => {
+            thumb.classList.toggle('active', index === currentImageIndex);
+        });
+    };
+    
+    window.changeImageTo = function(index) {
+        const workshop = workshopsData[currentWorkshop];
+        if (!workshop) return;
+        const images = workshop.image_urls || [];
+        
+        currentImageIndex = index;
+        document.getElementById('modalMainImage').src = images[currentImageIndex];
+        
+        document.querySelectorAll('.modal-thumb').forEach((thumb, i) => {
+            thumb.classList.toggle('active', i === index);
+        });
+    };
+    
+    window.closeModal = function() {
+        document.getElementById('workshopModal').style.display = 'none';
+        document.body.style.overflow = 'auto';
+    };
+    
+    window.onclick = function(event) {
+        if (event.target === document.getElementById('workshopModal')) closeModal();
+    };
+    
+    document.addEventListener('keydown', function(event) {
+        if (document.getElementById('workshopModal').style.display === 'block') {
+            if (event.key === 'ArrowLeft') changeImage(-1);
+            else if (event.key === 'ArrowRight') changeImage(1);
+            else if (event.key === 'Escape') closeModal();
+        }
+    });
+    
+    // Load footer
+    async function loadFooter() {
+        const { data } = await supabase
+            .from('site_settings')
+            .select('*')
+            .eq('id', 1)
+            .single();
+        
+        if (!data) return;
+        
+        document.getElementById('copyright-text').textContent = data.copyright_text;
+        document.getElementById('footer-address').innerHTML = data.contact_address;
+        
+        const links = [];
+        if (data.facebook_url) links.push(`<a href="${data.facebook_url}" target="_blank"><i class="fab fa-facebook"></i></a>`);
+        if (data.instagram_url) links.push(`<a href="${data.instagram_url}" target="_blank"><i class="fab fa-instagram"></i></a>`);
+        if (data.whatsapp_url) links.push(`<a href="${data.whatsapp_url}" target="_blank"><i class="fab fa-whatsapp"></i></a>`);
+        if (data.linkedin_url) links.push(`<a href="${data.linkedin_url}" target="_blank"><i class="fab fa-linkedin"></i></a>`);
+        links.push(`<a href="mailto:${data.contact_email}" target="_blank"><i class="fas fa-envelope"></i></a>`);
+        
+        document.getElementById('footer-social').innerHTML = links.join('');
+    }
+    
+    // Initialize
+    loadWorkshops();
+    loadFooter();
+</script>
+
 </body>
 </html>

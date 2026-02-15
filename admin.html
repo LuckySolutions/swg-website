@@ -268,6 +268,69 @@
     <!-- Team Members List -->
     <h3>Current Team Members</h3>
     <div id="team-list"></div>
+
+    <!-- Workshops Management -->
+    <h2 class="section-title">📅 Workshops</h2>
+
+    <!-- Add/Edit Workshop Form -->
+    <div class="admin-form" id="workshop-form">
+        <h3 id="workshop-form-title">Add New Workshop</h3>
+        <input type="hidden" id="workshop-id" value="">
+        
+        <div class="form-group">
+            <label>Title *</label>
+            <input type="text" id="workshop-title" required>
+        </div>
+        
+        <div class="form-row">
+            <div class="form-group">
+                <label>Date *</label>
+                <input type="text" id="workshop-date" placeholder="e.g., 7th February 2026" required>
+            </div>
+            
+            <div class="form-group">
+                <label>Conducted By *</label>
+                <input type="text" id="workshop-conducted" required>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label>Description *</label>
+            <textarea id="workshop-description" rows="4" required></textarea>
+        </div>
+        
+        <div class="form-row">
+            <div class="form-group">
+                <label>Status *</label>
+                <select id="workshop-status" required>
+                    <option value="upcoming">🔮 Upcoming (Future)</option>
+                    <option value="completed">✅ Completed (Past)</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label>Display Order</label>
+                <input type="number" id="workshop-order" value="0" min="0">
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label>Photos (Max 4)</label>
+            <input type="file" id="workshop-photos" accept="image/*" multiple>
+            <small style="color: #666;">You can select up to 4 photos</small>
+            <div class="photo-preview" id="workshop-photo-preview"></div>
+        </div>
+        
+        <div style="display: flex; gap: 10px;">
+            <button type="button" onclick="saveWorkshop()" class="btn-save">Save Workshop</button>
+            <button type="button" onclick="clearWorkshopForm()" style="background: #666; color: white; padding: 12px 20px; border: none; border-radius: 5px; cursor: pointer;">Clear</button>
+        </div>
+    </div>
+
+    <!-- Workshops List -->
+    <h3>Current Workshops</h3>
+    <div id="workshop-list"></div>
+
 </div>
 
 <!-- For local development ONLY -->
@@ -524,6 +587,247 @@
         currentPhotoFile = null;
         document.getElementById('team-photo').value = '';
     };
+
+
+    // ==================== WORKSHOPS ====================
+    // 👇 INSERT ALL WORKSHOP CODE HERE 👇
+    let currentWorkshopPhotos = [];
+
+    // Handle multiple photo selection
+    document.getElementById('workshop-photos')?.addEventListener('change', function(e) {
+        const files = Array.from(e.target.files);
+        if (files.length > 4) {
+            alert('Maximum 4 photos allowed');
+            this.value = '';
+            return;
+        }
+        
+        currentWorkshopPhotos = files;
+        const preview = document.getElementById('workshop-photo-preview');
+        preview.innerHTML = '';
+        
+        files.forEach(file => {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                img.style.maxWidth = '100px';
+                img.style.maxHeight = '100px';
+                img.style.margin = '5px';
+                img.style.borderRadius = '5px';
+                preview.appendChild(img);
+            };
+            reader.readAsDataURL(file);
+        });
+    });
+
+    // Upload photos to storage
+    async function uploadWorkshopPhotos(workshopId, files) {
+        const urls = [];
+        
+        for (let i = 0; i < files.length; i++) {
+            const file = files[i];
+            const fileExt = file.name.split('.').pop();
+            const fileName = `workshops/${workshopId}_${Date.now()}_${i}.${fileExt}`;
+            
+            const { error: uploadError } = await supabase.storage
+                .from('workshop-photos')
+                .upload(fileName, file);
+            
+            if (uploadError) throw uploadError;
+            
+            const { data: { publicUrl } } = supabase.storage
+                .from('workshop-photos')
+                .getPublicUrl(fileName);
+            
+            urls.push(publicUrl);
+        }
+        
+        return urls;
+    }
+
+    // Load workshops
+    window.loadWorkshops = async function() {
+        const { data, error } = await supabase
+            .from('workshops')
+            .select('*')
+            .order('display_order', { ascending: true });
+        
+        if (error) {
+            console.error('Error loading workshops:', error);
+            return;
+        }
+        
+        const container = document.getElementById('workshop-list');
+        if (!container) return;
+        
+        if (data.length === 0) {
+            container.innerHTML = '<p>No workshops added yet.</p>';
+            return;
+        }
+        
+        container.innerHTML = data.map(workshop => `
+            <div class="team-member-item">
+                <div style="flex: 1;">
+                    <strong>${workshop.title}</strong><br>
+                    <span style="color: #666;">${workshop.date} | ${workshop.conducted_by}</span><br>
+                    <span style="display: inline-block; padding: 2px 8px; background: ${workshop.status === 'completed' ? '#4CAF50' : '#FF9800'}; color: white; border-radius: 3px; font-size: 12px; margin-top: 5px;">
+                        ${workshop.status === 'completed' ? '✅ Past' : '🔮 Upcoming'}
+                    </span>
+                    <span style="margin-left: 10px; color: #888;">${workshop.image_urls?.length || 0} photos</span>
+                </div>
+                <div>
+                    <button onclick="editWorkshop(${workshop.id})" class="btn-edit">Edit</button>
+                    <button onclick="deleteWorkshop(${workshop.id})" class="btn-delete">Delete</button>
+                </div>
+            </div>
+        `).join('');
+    };
+
+    // Save workshop
+    window.saveWorkshop = async function() {
+        const id = document.getElementById('workshop-id').value;
+        const title = document.getElementById('workshop-title').value;
+        const date = document.getElementById('workshop-date').value;
+        const conducted_by = document.getElementById('workshop-conducted').value;
+        const description = document.getElementById('workshop-description').value;
+        const status = document.getElementById('workshop-status').value;
+        const display_order = parseInt(document.getElementById('workshop-order').value) || 0;
+        
+        if (!title || !date || !conducted_by || !description) {
+            alert('Please fill all required fields');
+            return;
+        }
+        
+        let image_urls = [];
+        
+        // Upload new photos if any
+        if (currentWorkshopPhotos.length > 0) {
+            try {
+                image_urls = await uploadWorkshopPhotos(id || 'new', currentWorkshopPhotos);
+            } catch (error) {
+                alert('Error uploading photos: ' + error.message);
+                return;
+            }
+        }
+        
+        const workshopData = {
+            title,
+            date,
+            conducted_by,
+            description,
+            status,
+            display_order,
+            ...(image_urls.length > 0 && { image_urls })
+        };
+        
+        let error;
+        if (id) {
+            ({ error } = await supabase
+                .from('workshops')
+                .update(workshopData)
+                .eq('id', id));
+        } else {
+            ({ error } = await supabase
+                .from('workshops')
+                .insert([workshopData]));
+        }
+        
+        if (error) {
+            alert('Error saving: ' + error.message);
+        } else {
+            alert('Workshop saved!');
+            clearWorkshopForm();
+            loadWorkshops();
+        }
+    };
+
+    // Edit workshop
+    window.editWorkshop = async function(id) {
+        const { data, error } = await supabase
+            .from('workshops')
+            .select('*')
+            .eq('id', id)
+            .single();
+        
+        if (error) {
+            alert('Error loading: ' + error.message);
+            return;
+        }
+        
+        document.getElementById('workshop-id').value = data.id;
+        document.getElementById('workshop-title').value = data.title;
+        document.getElementById('workshop-date').value = data.date;
+        document.getElementById('workshop-conducted').value = data.conducted_by;
+        document.getElementById('workshop-description').value = data.description;
+        document.getElementById('workshop-status').value = data.status;
+        document.getElementById('workshop-order').value = data.display_order || 0;
+        
+        // Show existing photos preview
+        if (data.image_urls && data.image_urls.length > 0) {
+            const preview = document.getElementById('workshop-photo-preview');
+            preview.innerHTML = '';
+            data.image_urls.forEach(url => {
+                const img = document.createElement('img');
+                img.src = url;
+                img.style.maxWidth = '100px';
+                img.style.maxHeight = '100px';
+                img.style.margin = '5px';
+                img.style.borderRadius = '5px';
+                preview.appendChild(img);
+            });
+        }
+        
+        document.getElementById('workshop-form-title').textContent = 'Edit Workshop';
+        currentWorkshopPhotos = [];
+    };
+
+    // Delete workshop
+    window.deleteWorkshop = async function(id) {
+        if (!confirm('Are you sure you want to delete this workshop?')) return;
+        
+        const { error } = await supabase
+            .from('workshops')
+            .delete()
+            .eq('id', id);
+        
+        if (error) {
+            alert('Error deleting: ' + error.message);
+        } else {
+            loadWorkshops();
+        }
+    };
+
+    // Clear workshop form
+    window.clearWorkshopForm = function() {
+        document.getElementById('workshop-id').value = '';
+        document.getElementById('workshop-title').value = '';
+        document.getElementById('workshop-date').value = '';
+        document.getElementById('workshop-conducted').value = '';
+        document.getElementById('workshop-description').value = '';
+        document.getElementById('workshop-status').value = 'upcoming';
+        document.getElementById('workshop-order').value = '0';
+        document.getElementById('workshop-photo-preview').innerHTML = '';
+        document.getElementById('workshop-form-title').textContent = 'Add New Workshop';
+        currentWorkshopPhotos = [];
+        document.getElementById('workshop-photos').value = '';
+    };
+    
+    // Update login function to load workshops
+    // Find this function and add loadWorkshops():
+    window.login = function() {
+        const user = document.getElementById('username').value
+        const pass = document.getElementById('password').value
+        if (user === 'admin' && pass === 'admin123') {
+            document.getElementById('login-form').classList.add('hidden')
+            document.getElementById('admin-panel').classList.remove('hidden')
+            loadSettings()
+            loadTeamMembers()
+            loadWorkshops()  // 👈 ADD THIS LINE
+        } else {
+            alert('Invalid credentials')
+        }
+    }
 </script>
 
 </body>
