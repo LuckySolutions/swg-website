@@ -61,9 +61,14 @@
     <div class="footer-social" id="footer-social"></div>
 </footer>
 
-<script src="assets/js/config.js"></script>
+<!-- For local development ONLY -->
+<script>
+    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+        document.write('<script src="assets/js/config.js"><\/script>');
+    }
+</script>
 
-
+<!-- Environment variables for Vercel (these stay as placeholders) -->
 <script>
     window.env = {
         VITE_SUPABASE_URL: '%VITE_SUPABASE_URL%',
