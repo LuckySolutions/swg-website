@@ -337,3 +337,43 @@ document.addEventListener('keydown', function(event) {
         }
     }
 });
+
+// ==================== FOOTER LOADER ====================
+async function loadFooter() {
+    // Check if supabase is available (pages with supabase import)
+    if (typeof supabase === 'undefined') return;
+    
+    const { data, error } = await supabase
+        .from('site_settings')
+        .select('*')
+        .eq('id', 1)
+        .single();
+    
+    if (error || !data) return;
+    
+    const copyrightEl = document.getElementById('copyright-text');
+    const addressEl = document.getElementById('footer-address');
+    const socialEl = document.getElementById('footer-social');
+    
+    if (copyrightEl) copyrightEl.textContent = data.copyright_text;
+    if (addressEl) addressEl.innerHTML = data.contact_address;
+    
+    if (socialEl) {
+        const socialLinks = [];
+        if (data.facebook_url) socialLinks.push(`<a href="${data.facebook_url}" target="_blank"><i class="fab fa-facebook"></i></a>`);
+        if (data.instagram_url) socialLinks.push(`<a href="${data.instagram_url}" target="_blank"><i class="fab fa-instagram"></i></a>`);
+        if (data.whatsapp_url) socialLinks.push(`<a href="${data.whatsapp_url}" target="_blank"><i class="fab fa-whatsapp"></i></a>`);
+        if (data.linkedin_url) socialLinks.push(`<a href="${data.linkedin_url}" target="_blank"><i class="fab fa-linkedin"></i></a>`);
+        socialLinks.push(`<a href="mailto:${data.contact_email}" target="_blank"><i class="fas fa-envelope"></i></a>`);
+        socialEl.innerHTML = socialLinks.join('');
+    }
+}
+
+// Call it when DOM is ready
+if (document.getElementById('footer-social')) {
+    // Need to ensure supabase is available
+    import('./supabase.js').then(({ supabase }) => {
+        window.supabase = supabase;
+        loadFooter();
+    });
+}

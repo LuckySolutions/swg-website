@@ -28,24 +28,19 @@
         <p>StraightWay Global Institute is a professional educational platform dedicated to promoting psychological well-being, emotional intelligence, and personal growth through interactive workshops and awareness programs.</p>
         
         <p>Founded by Ms. Fathima Mishfah, MSc in Health Psychology (Cardiff Metropolitan University, UK), the institute focuses on making psychology accessible and practical for everyday life. Our workshops integrate the latest psychological research with creative, evidence-based approaches such as art therapy, counselling psychology, and mindfulness.</p>
+        
         <!-- CPD Approved Badge -->
-        <!-- ================= CPD APPROVED SECTION ================= -->
         <div class="cpd-approved">
-            
             <div class="cpd-text">
                 <p>
                     <strong>StraightWay Global Institute is officially CPD Approved.</strong><br>
                     Our programmes meet internationally recognised Continuing Professional Development (CPD) standards, ensuring quality, credibility, and professional relevance.
                 </p>
             </div>
-
             <div class="cpd-logo">
                 <img src="assets/images/CPD logo.png" alt="CPD Approved">
             </div>
-
         </div>
-
-
 
         <h2>Our Vision</h2>
         <p>To be a trusted and globally connected platform that empowers individuals through psychological knowledge, promoting mental well-being, compassion, and lifelong growth.</p>
@@ -60,52 +55,9 @@
 
         <h2>Our Team</h2>
         
-                <!-- ================= TEAM MEMBER 1 ================= -->
-        <div class="team-member">
-            <img src="assets/images/Founder & Director.jpg" 
-                alt="Ms. Fathima Mishfah" 
-                class="team-photo">
-
-            <div class="team-info">
-                <h3>Founder & Director</h3>
-                <p class="name">Ms. Fathima Mishfah</p>
-                <p>
-                    MSc Health Psychology (Cardiff Metropolitan University, UK)<br>
-                    BSc Psychology (Cardiff Metropolitan University, UK)<br>
-                    Licensed Art Therapy Practitioner<br>
-                    Member – British Psychological Society (BPS)
-                </p>
-            </div>
-        </div>
-
-        <!-- ================= TEAM MEMBER 2 ================= -->
-        <div class="team-member">
-            <img src="assets/images/Co Director.jpg" 
-                alt="Mr. Mohamed Ramzan" 
-                class="team-photo">
-
-            <div class="team-info">
-                <h3>Co-Director</h3>
-                <p class="name">Mr. Mohamed Ramzan</p>
-                <p>
-                    MEng Electrical and Electronic Engineering (University of the West of England, UK)<br>
-                    MIET (UK)
-                </p>
-            </div>
-        </div>
-
-        <!-- ================= TEAM MEMBER 3 ================= -->
-        <div class="team-member">
-            <!-- Add image here if you have one -->
-            <div class="team-info">
-                <h3>Chief Operating Officer (COO)</h3>
-                <p class="name">Ms. A. S. F. Aathika</p>
-                <p>
-                    BSc Psychology (Cardiff Metropolitan University, UK)<br>
-                    PGCE in Education<br>
-                    Diploma in Education Management and Leadership
-                </p>
-            </div>
+        <!-- Team members will be loaded here dynamically -->
+        <div id="team-members-container">
+            <!-- Static fallback will be shown if Supabase fails -->
         </div>
 
         <h2>Mode of Delivery</h2>
@@ -118,6 +70,99 @@
     <p class="address">No: 16 1/1, Ediriweera Avenue, Dehiwala, Sri Lanka</p>
 </footer>
 
-<script src="assets/js/script.js"></script>
+<!-- For local development -->
+<script>
+    if (window.location.hostname === 'localhost') {
+        document.write('<script src="assets/js/config.js"><\/script>');
+    }
+</script>
+
+<script type="module">
+    import { supabase } from './assets/js/supabase.js'
+    
+    // Static fallback team members (hardcoded)
+    const staticTeamMembers = [
+        {
+            name: "Ms. Fathima Mishfah",
+            role: "Founder & Director",
+            qualifications: "MSc Health Psychology (Cardiff Metropolitan University, UK)\nBSc Psychology (Cardiff Metropolitan University, UK)\nLicensed Art Therapy Practitioner\nMember – British Psychological Society (BPS)",
+            photo_url: "assets/images/Founder & Director.jpg",
+            display_order: 1
+        },
+        {
+            name: "Mr. Mohamed Ramzan",
+            role: "Co-Director",
+            qualifications: "MEng Electrical and Electronic Engineering (University of the West of England, UK)\nMIET (UK)",
+            photo_url: "assets/images/Co Director.jpg",
+            display_order: 2
+        },
+        {
+            name: "Ms. A. S. F. Aathika",
+            role: "Chief Operating Officer (COO)",
+            qualifications: "BSc Psychology (Cardiff Metropolitan University, UK)\nPGCE in Education\nDiploma in Education Management and Leadership",
+            photo_url: null,
+            display_order: 3
+        }
+    ];
+    
+    async function loadTeamMembers() {
+        const container = document.getElementById('team-members-container');
+        if (!container) return;
+        
+        let teamMembers = [];
+        let error = null;
+        
+        // Try to load from Supabase
+        try {
+            const { data, error: supabaseError } = await supabase
+                .from('team_members')
+                .select('*')
+                .order('display_order', { ascending: true });
+            
+            if (supabaseError) {
+                throw supabaseError;
+            }
+            
+            if (data && data.length > 0) {
+                teamMembers = data;
+                console.log('✅ Loaded team from Supabase');
+            } else {
+                throw new Error('No data');
+            }
+        } catch (err) {
+            console.warn('⚠️ Using static team members (Supabase error):', err);
+            teamMembers = staticTeamMembers;
+        }
+        
+        // Sort by display_order just to be sure
+        teamMembers.sort((a, b) => (a.display_order || 999) - (b.display_order || 999));
+        
+        // Render team members
+        container.innerHTML = teamMembers.map(member => {
+            // Convert newlines to <br> tags
+            const qualifications = member.qualifications.split('\n').join('<br>');
+            
+            // Handle photo
+            const photoHtml = member.photo_url 
+                ? `<img src="${member.photo_url}" alt="${member.name}" class="team-photo">`
+                : '';
+            
+            return `
+                <div class="team-member">
+                    ${photoHtml}
+                    <div class="team-info">
+                        <h3>${member.role}</h3>
+                        <p class="name">${member.name}</p>
+                        <p>${qualifications}</p>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
+    
+    // Load team members when page loads
+    loadTeamMembers();
+</script>
+
 </body>
 </html>
