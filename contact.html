@@ -57,7 +57,6 @@
 
 <footer>
     <p id="copyright-text"></p>
-    <p class="address" id="footer-address"></p>
     <div class="footer-social" id="footer-social"></div>
 </footer>
 
@@ -68,7 +67,6 @@
     }
 </script>
 
-<!-- Environment variables for Vercel (these stay as placeholders) -->
 
 
 <script type="module">
@@ -84,7 +82,7 @@
             
             if (error) throw error
             
-            // Contact Info
+            // Contact Info - Online Only (No physical address)
             document.getElementById('contact-info-container').innerHTML = `
                 <div class="contact-item">
                     <div class="contact-icon"><i class="fas fa-envelope"></i></div>
@@ -99,15 +97,15 @@
                     <div class="contact-details">
                         <h3>Call Us</h3>
                         <a href="tel:${data.contact_phone}">${data.contact_phone}</a>
-                        <p>${data.business_hours}</p>
+                        <p>${data.business_hours || 'Mon-Fri, 9:00 AM - 5:00 PM'}</p>
                     </div>
                 </div>
                 <div class="contact-item">
-                    <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+                    <div class="contact-icon"><i class="fas fa-globe"></i></div>
                     <div class="contact-details">
-                        <h3>Our Location</h3>
-                        <p>${data.contact_address.replace(/,/g, '<br>')}</p>
-                        <p class="note"><small>${data.address_note}</small></p>
+                        <h3>Online Operation</h3>
+                        <p><strong>StraightWay Global Institute</strong> operates completely online</p>
+                        <p class="note"><small>${data.address_note || 'All sessions conducted via secure online platforms'}</small></p>
                     </div>
                 </div>
             `
@@ -124,10 +122,10 @@
                 `<a href="${s.url}" target="_blank" class="social-link ${s.class}"><i class="${s.icon}"></i><span>${s.name}</span></a>`
             ).join('')
             
-            // Footer
+            // Footer - REMOVED reference to footer-address
             document.getElementById('copyright-text').textContent = data.copyright_text
-            document.getElementById('footer-address').innerHTML = data.contact_address
             
+            // Footer social icons
             const footerIcons = socialLinks.map(s => {
                 let icon = s.icon
                 if (s.name === 'Facebook') icon = 'fab fa-facebook'
@@ -141,13 +139,13 @@
             
             // Direct contact note
             document.getElementById('direct-contact-note').innerHTML = `
-                <p>📧 Email: <strong>${data.contact_email}</strong></p>
-                <p>💬 <a href="${data.whatsapp_url}" target="_blank">Chat on WhatsApp</a></p>
+                <p>? Email: <strong>${data.contact_email}</strong></p>
+                <p>? <a href="${data.whatsapp_url}" target="_blank">Chat on WhatsApp</a></p>
             `
             
         } catch (error) {
             console.error('Error:', error)
-            document.getElementById('contact-info-container').innerHTML = '<p class="error">Error loading contact information</p>'
+            document.getElementById('contact-info-container').innerHTML = '<p class="error">Error loading contact information. Please try again later.</p>'
         }
     }
     

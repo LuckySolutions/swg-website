@@ -7,156 +7,416 @@
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* Modern Admin Panel Styles */
+        :root {
+            --primary: #0a2647;
+            --primary-light: #1a3a6e;
+            --secondary: #ffd700;
+            --success: #4CAF50;
+            --danger: #f44336;
+            --warning: #FF9800;
+            --info: #2196F3;
+            --gray-100: #f8f9fa;
+            --gray-200: #e9ecef;
+            --gray-300: #dee2e6;
+            --gray-600: #6c757d;
+            --dark: #343a40;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
         .admin-container {
-            max-width: 800px;
-            margin: 50px auto;
+            max-width: 1200px;
+            margin: 30px auto;
             padding: 20px;
         }
+
         .admin-header {
+            background: white;
+            padding: 25px 30px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 30px;
         }
-        .admin-form {
-            background: #f9f9f9;
-            padding: 30px;
+
+        .admin-header h2 {
+            color: var(--primary);
+            font-size: 28px;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .logout-btn {
+            background: var(--danger);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            background: #d32f2f;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(244, 67, 54, 0.3);
+        }
+
+        .nav-links {
+            background: white;
+            padding: 15px 20px;
             border-radius: 10px;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
         }
+
+        .nav-links a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 5px 15px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .section-card {
+            background: white;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            padding: 20px 25px;
+            font-size: 20px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-header i {
+            font-size: 24px;
+        }
+
+        .section-body {
+            padding: 25px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
         .form-group {
             margin-bottom: 20px;
         }
+
         .form-group label {
             display: block;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
             font-weight: 500;
+            color: var(--dark);
+            font-size: 14px;
         }
-        .form-group input, .form-group textarea {
+
+        .form-group input, 
+        .form-group textarea,
+        .form-group select {
             width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
+            padding: 12px 15px;
+            border: 2px solid var(--gray-200);
+            border-radius: 10px;
+            font-size: 14px;
+            transition: all 0.3s ease;
         }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(10, 38, 71, 0.1);
+        }
+
         .form-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 20px;
         }
-        .btn-save {
-            background: #4CAF50;
-            color: white;
-            padding: 12px 30px;
+
+        .btn {
+            padding: 12px 25px;
             border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        .btn-save:hover {
-            background: #45a049;
-        }
-        .btn-delete {
-            background: #f44336;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 3px;
-            cursor: pointer;
-        }
-        .btn-edit {
-            background: #2196F3;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 3px;
-            cursor: pointer;
-            margin-right: 5px;
-        }
-        .login-form {
-            max-width: 400px;
-            margin: 100px auto;
-            padding: 30px;
-            background: #f9f9f9;
             border-radius: 10px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
         }
-        .hidden { display: none; }
-        .nav-links {
-            margin-bottom: 20px;
-            padding: 10px;
-            background: #f0f0f0;
-            border-radius: 5px;
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
         }
-        .nav-links a {
-            margin-right: 20px;
-            color: #0a2647;
-            text-decoration: none;
+
+        .btn-primary:hover {
+            background: var(--primary-light);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(10, 38, 71, 0.3);
         }
-        .nav-links a:hover {
-            text-decoration: underline;
+
+        .btn-success {
+            background: var(--success);
+            color: white;
         }
-        .team-member-item {
-            background: #f9f9f9;
+
+        .btn-success:hover {
+            background: #45a049;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+        }
+
+        .btn-warning {
+            background: var(--warning);
+            color: white;
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+
+        .btn-info {
+            background: var(--info);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: var(--gray-600);
+            color: white;
+        }
+
+        .item-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .list-item {
+            background: var(--gray-100);
+            border-radius: 10px;
             padding: 15px;
-            margin-bottom: 15px;
-            border-radius: 5px;
             display: flex;
             align-items: center;
             gap: 15px;
+            transition: all 0.3s ease;
         }
-        .team-photo-small {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            object-fit: cover;
-            background: #ddd;
+
+        .list-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
-        .photo-placeholder {
-            width: 60px;
-            height: 60px;
+
+        .item-avatar {
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
-            background: #ddd;
+            background: var(--primary);
+            color: white;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 24px;
+            font-size: 20px;
         }
-        .team-info {
+
+        .item-avatar img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .item-content {
             flex: 1;
         }
-        .section-title {
-            margin: 30px 0 15px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #0a2647;
+
+        .item-title {
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 5px;
         }
+
+        .item-subtitle {
+            font-size: 13px;
+            color: var(--gray-600);
+        }
+
+        .item-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-icon {
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+        }
+
         .photo-preview {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
             margin-top: 10px;
         }
+
         .photo-preview img {
-            max-width: 100px;
-            max-height: 100px;
-            border-radius: 5px;
+            width: 80px;
+            height: 80px;
+            border-radius: 8px;
+            object-fit: cover;
+            border: 2px solid var(--gray-300);
+        }
+
+        .login-form {
+            max-width: 400px;
+            margin: 100px auto;
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .login-form h2 {
+            color: var(--primary);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .badge-success {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .badge-warning {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .help-text {
+            font-size: 12px;
+            color: var(--gray-600);
+            margin-top: 5px;
+        }
+
+        .whatsapp-preview {
+            background: #e8f5e9;
+            padding: 10px 15px;
+            border-radius: 8px;
+            margin-top: 10px;
+            font-size: 13px;
+            border-left: 4px solid #25D366;
+        }
+
+        .whatsapp-preview a {
+            color: #25D366;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .whatsapp-preview a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .admin-container {
+                padding: 10px;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .list-item {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .item-actions {
+                width: 100%;
+                justify-content: center;
+            }
         }
     </style>
 </head>
 <body>
 
 <div id="login-form" class="login-form">
-    <h2>Admin Login</h2>
+    <h2><i class="fas fa-lock"></i> Admin Login</h2>
     <div class="form-group">
-        <label>Username</label>
-        <input type="text" id="username" placeholder="admin">
+        <label><i class="fas fa-user"></i> Username</label>
+        <input type="text" id="username" placeholder="Enter username">
     </div>
     <div class="form-group">
-        <label>Password</label>
-        <input type="password" id="password" placeholder="••••••••">
+        <label><i class="fas fa-key"></i> Password</label>
+        <input type="password" id="password" placeholder="Enter password">
     </div>
-    <button onclick="login()" class="btn-save">Login</button>
+    <button onclick="login()" class="btn btn-primary" style="width: 100%;">
+        <i class="fas fa-sign-in-alt"></i> Login
+    </button>
 </div>
 
 <div id="admin-panel" class="admin-container hidden">
     <div class="admin-header">
-        <h2>Site Settings</h2>
-        <button onclick="logout()" style="background: #f44336; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer;">Logout</button>
+        <h2><i class="fas fa-cog"></i> Site Settings Dashboard</h2>
+        <button onclick="logout()" class="logout-btn">
+            <i class="fas fa-sign-out-alt"></i> Logout
+        </button>
     </div>
     
     <div class="nav-links">
@@ -166,171 +426,224 @@
         <a href="contact.html" target="_blank"><i class="fas fa-envelope"></i> Contact</a>
     </div>
     
-    <!-- Site Settings Form -->
-    <form id="settings-form" class="admin-form">
-        <h3>📞 Contact Information</h3>
-        <div class="form-group">
-            <label>Email *</label>
-            <input type="email" id="contact_email" required>
+    <!-- Site Settings Section -->
+    <div class="section-card">
+        <div class="section-header">
+            <i class="fas fa-globe"></i> Site Settings
         </div>
-        
-        <div class="form-group">
-            <label>Phone *</label>
-            <input type="text" id="contact_phone" required>
-        </div>
-        
-        <div class="form-group">
-            <label>Address *</label>
-            <textarea id="contact_address" rows="2" required></textarea>
-        </div>
-        
-        <div class="form-group">
-            <label>Address Note</label>
-            <input type="text" id="address_note">
-        </div>
-        
-        <div class="form-group">
-            <label>Business Hours</label>
-            <input type="text" id="business_hours">
-        </div>
-        
-        <h3>🌐 Social Media</h3>
-        <div class="form-group">
-            <label>Facebook URL</label>
-            <input type="url" id="facebook_url">
-        </div>
-        
-        <div class="form-group">
-            <label>Instagram URL</label>
-            <input type="url" id="instagram_url">
-        </div>
-        
-        <div class="form-group">
-            <label>WhatsApp URL</label>
-            <input type="url" id="whatsapp_url">
-        </div>
-        
-        <div class="form-group">
-            <label>LinkedIn URL</label>
-            <input type="url" id="linkedin_url">
-        </div>
-        
-        <h3>📄 Footer</h3>
-        <div class="form-group">
-            <label>Copyright Text</label>
-            <input type="text" id="copyright_text">
-        </div>
-        
-        <button type="submit" class="btn-save">Save Site Settings</button>
-    </form>
-    
-    <!-- Team Members Management -->
-    <h2 class="section-title">👥 Team Members</h2>
-    
-    <!-- Add/Edit Team Member Form -->
-    <div class="admin-form" id="team-form">
-        <h3 id="team-form-title">Add New Team Member</h3>
-        <input type="hidden" id="team-id" value="">
-        
-        <div class="form-group">
-            <label>Name *</label>
-            <input type="text" id="team-name" required>
-        </div>
-        
-        <div class="form-group">
-            <label>Role/Position *</label>
-            <input type="text" id="team-role" required>
-        </div>
-        
-        <div class="form-group">
-            <label>Qualifications (one per line) *</label>
-            <textarea id="team-qualifications" rows="4" required></textarea>
-        </div>
-        
-        <div class="form-group">
-            <label>Display Order</label>
-            <input type="number" id="team-order" value="0" min="0">
-        </div>
-        
-        <div class="form-group">
-            <label>Photo</label>
-            <input type="file" id="team-photo" accept="image/*">
-            <small style="color: #666;">Leave empty to keep existing photo</small>
-            <div class="photo-preview" id="photo-preview"></div>
-        </div>
-        
-        <div style="display: flex; gap: 10px;">
-            <button type="button" onclick="saveTeamMember()" class="btn-save">Save Team Member</button>
-            <button type="button" onclick="clearTeamForm()" style="background: #666; color: white; padding: 12px 20px; border: none; border-radius: 5px; cursor: pointer;">Clear</button>
+        <div class="section-body">
+            <form id="settings-form">
+                <h3 style="margin-bottom: 20px; color: var(--primary);">
+                    <i class="fas fa-phone-alt"></i> Contact Information
+                </h3>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Email *</label>
+                        <input type="email" id="contact_email" required placeholder="info@example.com">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Phone *</label>
+                        <input type="text" id="contact_phone" required placeholder="+94 77 123 4567">
+                    </div>
+                </div>
+                
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Address *</label>
+                        <textarea id="contact_address" rows="2" required placeholder="Street, City, Country"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Address Note</label>
+                        <input type="text" id="address_note" placeholder="e.g., Currently operating online">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Business Hours</label>
+                    <input type="text" id="business_hours" placeholder="Mon-Fri, 9:00 AM - 5:00 PM">
+                </div>
+                
+                <h3 style="margin: 30px 0 20px; color: var(--primary);">
+                    <i class="fas fa-share-alt"></i> Social Media
+                </h3>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label><i class="fab fa-facebook" style="color: #1877f2;"></i> Facebook URL</label>
+                        <input type="url" id="facebook_url" placeholder="https://facebook.com/...">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label><i class="fab fa-instagram" style="color: #e4405f;"></i> Instagram URL</label>
+                        <input type="url" id="instagram_url" placeholder="https://instagram.com/...">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label><i class="fab fa-whatsapp" style="color: #25D366;"></i> WhatsApp Number</label>
+                        <input type="text" id="whatsapp_number" placeholder="e.g., 94759091502 (no + or spaces)">
+                        <small class="help-text">Enter number with country code (e.g., 94759091502)</small>
+                        <div id="whatsapp-preview" class="whatsapp-preview" style="display: none;">
+                            <i class="fab fa-whatsapp"></i> Preview: <a href="#" target="_blank" id="whatsapp-preview-link"></a>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label><i class="fab fa-linkedin" style="color: #0a66c2;"></i> LinkedIn URL</label>
+                        <input type="url" id="linkedin_url" placeholder="https://linkedin.com/company/...">
+                    </div>
+                </div>
+                
+                <h3 style="margin: 30px 0 20px; color: var(--primary);">
+                    <i class="fas fa-file-alt"></i> Footer
+                </h3>
+                <div class="form-group">
+                    <label>Copyright Text</label>
+                    <input type="text" id="copyright_text" placeholder="� 2026 Your Company. All Rights Reserved.">
+                </div>
+                
+                <button type="submit" class="btn btn-success">
+                    <i class="fas fa-save"></i> Save Settings
+                </button>
+            </form>
         </div>
     </div>
     
-    <!-- Team Members List -->
-    <h3>Current Team Members</h3>
-    <div id="team-list"></div>
-
-    <!-- Workshops Management -->
-    <h2 class="section-title">📅 Workshops</h2>
-
-    <!-- Add/Edit Workshop Form -->
-    <div class="admin-form" id="workshop-form">
-        <h3 id="workshop-form-title">Add New Workshop</h3>
-        <input type="hidden" id="workshop-id" value="">
-        
-        <div class="form-group">
-            <label>Title *</label>
-            <input type="text" id="workshop-title" required>
+    <!-- Team Members Section -->
+    <div class="section-card">
+        <div class="section-header">
+            <i class="fas fa-users"></i> Team Members
         </div>
-        
-        <div class="form-row">
-            <div class="form-group">
-                <label>Date *</label>
-                <input type="text" id="workshop-date" placeholder="e.g., 7th February 2026" required>
+        <div class="section-body">
+            <!-- Add/Edit Team Member Form -->
+            <div style="background: var(--gray-100); padding: 20px; border-radius: 10px; margin-bottom: 30px;">
+                <h3 id="team-form-title" style="margin-bottom: 20px; color: var(--primary);">
+                    <i class="fas fa-user-plus"></i> Add New Team Member
+                </h3>
+                <input type="hidden" id="team-id" value="">
+                
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Name *</label>
+                        <input type="text" id="team-name" required placeholder="Full name">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Role/Position *</label>
+                        <input type="text" id="team-role" required placeholder="e.g., Founder & Director">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Qualifications *</label>
+                    <textarea id="team-qualifications" rows="4" required placeholder="One per line"></textarea>
+                    <small class="help-text">Enter each qualification on a new line</small>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Display Order</label>
+                        <input type="number" id="team-order" value="0" min="0">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Photo</label>
+                        <input type="file" id="team-photo" accept="image/*">
+                        <small class="help-text">Leave empty to keep existing photo</small>
+                    </div>
+                </div>
+                
+                <div class="photo-preview" id="photo-preview"></div>
+                
+                <div style="display: flex; gap: 10px; margin-top: 20px;">
+                    <button type="button" onclick="saveTeamMember()" class="btn btn-success">
+                        <i class="fas fa-save"></i> Save Team Member
+                    </button>
+                    <button type="button" onclick="clearTeamForm()" class="btn btn-secondary">
+                        <i class="fas fa-times"></i> Clear
+                    </button>
+                </div>
             </div>
             
-            <div class="form-group">
-                <label>Conducted By *</label>
-                <input type="text" id="workshop-conducted" required>
-            </div>
-        </div>
-        
-        <div class="form-group">
-            <label>Description *</label>
-            <textarea id="workshop-description" rows="4" required></textarea>
-        </div>
-        
-        <div class="form-row">
-            <div class="form-group">
-                <label>Status *</label>
-                <select id="workshop-status" required>
-                    <option value="upcoming">🔮 Upcoming (Future)</option>
-                    <option value="completed">✅ Completed (Past)</option>
-                </select>
-            </div>
-            
-            <div class="form-group">
-                <label>Display Order</label>
-                <input type="number" id="workshop-order" value="0" min="0">
-            </div>
-        </div>
-        
-        <div class="form-group">
-            <label>Photos (Max 4)</label>
-            <input type="file" id="workshop-photos" accept="image/*" multiple>
-            <small style="color: #666;">You can select up to 4 photos</small>
-            <div class="photo-preview" id="workshop-photo-preview"></div>
-        </div>
-        
-        <div style="display: flex; gap: 10px;">
-            <button type="button" onclick="saveWorkshop()" class="btn-save">Save Workshop</button>
-            <button type="button" onclick="clearWorkshopForm()" style="background: #666; color: white; padding: 12px 20px; border: none; border-radius: 5px; cursor: pointer;">Clear</button>
+            <!-- Team Members List -->
+            <h3 style="margin-bottom: 20px;">Current Team Members</h3>
+            <div id="team-list" class="item-list"></div>
         </div>
     </div>
-
-    <!-- Workshops List -->
-    <h3>Current Workshops</h3>
-    <div id="workshop-list"></div>
-
+    
+    <!-- Workshops Section -->
+    <div class="section-card">
+        <div class="section-header">
+            <i class="fas fa-calendar-alt"></i> Workshops
+        </div>
+        <div class="section-body">
+            <!-- Add/Edit Workshop Form -->
+            <div style="background: var(--gray-100); padding: 20px; border-radius: 10px; margin-bottom: 30px;">
+                <h3 id="workshop-form-title" style="margin-bottom: 20px; color: var(--primary);">
+                    <i class="fas fa-plus-circle"></i> Add New Workshop
+                </h3>
+                <input type="hidden" id="workshop-id" value="">
+                
+                <div class="form-group">
+                    <label>Title *</label>
+                    <input type="text" id="workshop-title" required placeholder="e.g., Digital Mental Health Workshop">
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Date *</label>
+                        <input type="text" id="workshop-date" placeholder="e.g., 7th February 2026" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Conducted By *</label>
+                        <input type="text" id="workshop-conducted" required placeholder="e.g., Ms. Melani Hansika">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Description *</label>
+                    <textarea id="workshop-description" rows="4" required placeholder="Full description of the workshop..."></textarea>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Status *</label>
+                        <select id="workshop-status" required>
+                            <option value="upcoming">? Upcoming (Future)</option>
+                            <option value="completed">? Completed (Past)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Display Order</label>
+                        <input type="number" id="workshop-order" value="0" min="0">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Photos (Max 4)</label>
+                    <input type="file" id="workshop-photos" accept="image/*" multiple>
+                    <small class="help-text">You can select up to 4 photos</small>
+                </div>
+                
+                <div class="photo-preview" id="workshop-photo-preview"></div>
+                
+                <div style="display: flex; gap: 10px; margin-top: 20px;">
+                    <button type="button" onclick="saveWorkshop()" class="btn btn-success">
+                        <i class="fas fa-save"></i> Save Workshop
+                    </button>
+                    <button type="button" onclick="clearWorkshopForm()" class="btn btn-secondary">
+                        <i class="fas fa-times"></i> Clear
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Workshops List -->
+            <h3 style="margin-bottom: 20px;">Current Workshops</h3>
+            <div id="workshop-list" class="item-list"></div>
+        </div>
+    </div>
 </div>
 
 <!-- For local development ONLY -->
@@ -352,6 +665,7 @@
             document.getElementById('admin-panel').classList.remove('hidden')
             loadSettings()
             loadTeamMembers()
+            loadWorkshops()
         } else {
             alert('Invalid credentials')
         }
@@ -361,6 +675,30 @@
         document.getElementById('login-form').classList.remove('hidden')
         document.getElementById('admin-panel').classList.add('hidden')
     }
+    
+    // ==================== WHATSAPP NUMBER HANDLER ====================
+    function updateWhatsAppPreview() {
+        const number = document.getElementById('whatsapp_number').value.trim();
+        const preview = document.getElementById('whatsapp-preview');
+        const previewLink = document.getElementById('whatsapp-preview-link');
+        
+        if (number) {
+            // Remove any non-numeric characters
+            const cleanNumber = number.replace(/\D/g, '');
+            if (cleanNumber) {
+                const whatsappUrl = `https://wa.me/${cleanNumber}?text=Hello%20StraightWay%20Global%20Institute%21`;
+                previewLink.href = whatsappUrl;
+                previewLink.textContent = `https://wa.me/${cleanNumber}`;
+                preview.style.display = 'block';
+            } else {
+                preview.style.display = 'none';
+            }
+        } else {
+            preview.style.display = 'none';
+        }
+    }
+    
+    document.getElementById('whatsapp_number')?.addEventListener('input', updateWhatsAppPreview);
     
     // ==================== SITE SETTINGS ====================
     async function loadSettings() {
@@ -382,13 +720,31 @@
         document.getElementById('business_hours').value = data.business_hours || ''
         document.getElementById('facebook_url').value = data.facebook_url || ''
         document.getElementById('instagram_url').value = data.instagram_url || ''
-        document.getElementById('whatsapp_url').value = data.whatsapp_url || ''
         document.getElementById('linkedin_url').value = data.linkedin_url || ''
         document.getElementById('copyright_text').value = data.copyright_text || ''
+        
+        // Handle WhatsApp URL -> Number conversion
+        if (data.whatsapp_url) {
+            // Extract number from WhatsApp URL
+            const match = data.whatsapp_url.match(/wa\.me\/(\d+)/);
+            if (match) {
+                document.getElementById('whatsapp_number').value = match[1];
+                updateWhatsAppPreview();
+            }
+        }
     }
     
     document.getElementById('settings-form').addEventListener('submit', async (e) => {
         e.preventDefault()
+        
+        // Generate WhatsApp URL from number
+        const whatsappNumber = document.getElementById('whatsapp_number').value.trim();
+        let whatsapp_url = '';
+        
+        if (whatsappNumber) {
+            const cleanNumber = whatsappNumber.replace(/\D/g, '');
+            whatsapp_url = `https://wa.me/${cleanNumber}?text=Hello%20StraightWay%20Global%20Institute%21`;
+        }
         
         const settings = {
             contact_email: document.getElementById('contact_email').value,
@@ -398,7 +754,7 @@
             business_hours: document.getElementById('business_hours').value,
             facebook_url: document.getElementById('facebook_url').value,
             instagram_url: document.getElementById('instagram_url').value,
-            whatsapp_url: document.getElementById('whatsapp_url').value,
+            whatsapp_url: whatsapp_url,
             linkedin_url: document.getElementById('linkedin_url').value,
             copyright_text: document.getElementById('copyright_text').value
         }
@@ -409,9 +765,9 @@
             .eq('id', 1)
         
         if (error) {
-            alert('❌ Error: ' + error.message)
+            alert('? Error: ' + error.message)
         } else {
-            alert('✅ Settings saved!')
+            alert('? Settings saved!')
             await loadSettings()
         }
     })
@@ -419,14 +775,13 @@
     // ==================== TEAM MEMBERS ====================
     let currentPhotoFile = null;
     
-    // Handle photo selection
     document.getElementById('team-photo')?.addEventListener('change', function(e) {
         currentPhotoFile = e.target.files[0];
         if (currentPhotoFile) {
             const reader = new FileReader();
             reader.onload = function(e) {
                 document.getElementById('photo-preview').innerHTML = 
-                    `<img src="${e.target.result}" style="max-width: 100px; max-height: 100px; border-radius: 5px;">`;
+                    `<img src="${e.target.result}" alt="Preview">`;
             };
             reader.readAsDataURL(currentPhotoFile);
         }
@@ -447,23 +802,29 @@
         if (!container) return;
         
         if (data.length === 0) {
-            container.innerHTML = '<p>No team members added yet.</p>';
+            container.innerHTML = '<div class="list-item">No team members added yet.</div>';
             return;
         }
         
         container.innerHTML = data.map(member => `
-            <div class="team-member-item">
-                ${member.photo_url ? 
-                    `<img src="${member.photo_url}" alt="${member.name}" class="team-photo-small">` : 
-                    `<div class="photo-placeholder">📷</div>`
-                }
-                <div class="team-info">
-                    <strong>${member.name}</strong><br>
-                    <span style="color: #666;">${member.role}</span>
+            <div class="list-item">
+                <div class="item-avatar">
+                    ${member.photo_url ? 
+                        `<img src="${member.photo_url}" alt="${member.name}">` : 
+                        `<i class="fas fa-user"></i>`
+                    }
                 </div>
-                <div>
-                    <button onclick="editTeamMember(${member.id})" class="btn-edit">Edit</button>
-                    <button onclick="deleteTeamMember(${member.id})" class="btn-delete">Delete</button>
+                <div class="item-content">
+                    <div class="item-title">${member.name}</div>
+                    <div class="item-subtitle">${member.role}</div>
+                </div>
+                <div class="item-actions">
+                    <button onclick="editTeamMember(${member.id})" class="btn btn-info btn-icon">
+                        <i class="fas fa-edit"></i> Edit
+                    </button>
+                    <button onclick="deleteTeamMember(${member.id})" class="btn btn-danger btn-icon">
+                        <i class="fas fa-trash"></i> Delete
+                    </button>
                 </div>
             </div>
         `).join('');
@@ -483,7 +844,6 @@
         
         let photo_url = null;
         
-        // Upload photo if selected
         if (currentPhotoFile) {
             const fileExt = currentPhotoFile.name.split('.').pop();
             const fileName = `${Date.now()}_${Math.random().toString(36).substring(7)}.${fileExt}`;
@@ -554,10 +914,10 @@
         
         if (data.photo_url) {
             document.getElementById('photo-preview').innerHTML = 
-                `<img src="${data.photo_url}" style="max-width: 100px; max-height: 100px; border-radius: 5px;">`;
+                `<img src="${data.photo_url}" alt="Preview">`;
         }
         
-        document.getElementById('team-form-title').textContent = 'Edit Team Member';
+        document.getElementById('team-form-title').innerHTML = '<i class="fas fa-user-edit"></i> Edit Team Member';
         currentPhotoFile = null;
     };
     
@@ -583,17 +943,14 @@
         document.getElementById('team-qualifications').value = '';
         document.getElementById('team-order').value = '0';
         document.getElementById('photo-preview').innerHTML = '';
-        document.getElementById('team-form-title').textContent = 'Add New Team Member';
+        document.getElementById('team-form-title').innerHTML = '<i class="fas fa-user-plus"></i> Add New Team Member';
         currentPhotoFile = null;
         document.getElementById('team-photo').value = '';
     };
-
-
+    
     // ==================== WORKSHOPS ====================
-    // 👇 INSERT ALL WORKSHOP CODE HERE 👇
     let currentWorkshopPhotos = [];
-
-    // Handle multiple photo selection
+    
     document.getElementById('workshop-photos')?.addEventListener('change', function(e) {
         const files = Array.from(e.target.files);
         if (files.length > 4) {
@@ -611,17 +968,12 @@
             reader.onload = function(e) {
                 const img = document.createElement('img');
                 img.src = e.target.result;
-                img.style.maxWidth = '100px';
-                img.style.maxHeight = '100px';
-                img.style.margin = '5px';
-                img.style.borderRadius = '5px';
                 preview.appendChild(img);
             };
             reader.readAsDataURL(file);
         });
     });
-
-    // Upload photos to storage
+    
     async function uploadWorkshopPhotos(workshopId, files) {
         const urls = [];
         
@@ -645,8 +997,7 @@
         
         return urls;
     }
-
-    // Load workshops
+    
     window.loadWorkshops = async function() {
         const { data, error } = await supabase
             .from('workshops')
@@ -662,29 +1013,39 @@
         if (!container) return;
         
         if (data.length === 0) {
-            container.innerHTML = '<p>No workshops added yet.</p>';
+            container.innerHTML = '<div class="list-item">No workshops added yet.</div>';
             return;
         }
         
         container.innerHTML = data.map(workshop => `
-            <div class="team-member-item">
-                <div style="flex: 1;">
-                    <strong>${workshop.title}</strong><br>
-                    <span style="color: #666;">${workshop.date} | ${workshop.conducted_by}</span><br>
-                    <span style="display: inline-block; padding: 2px 8px; background: ${workshop.status === 'completed' ? '#4CAF50' : '#FF9800'}; color: white; border-radius: 3px; font-size: 12px; margin-top: 5px;">
-                        ${workshop.status === 'completed' ? '✅ Past' : '🔮 Upcoming'}
-                    </span>
-                    <span style="margin-left: 10px; color: #888;">${workshop.image_urls?.length || 0} photos</span>
+            <div class="list-item">
+                <div class="item-avatar">
+                    <i class="fas fa-calendar-alt"></i>
                 </div>
-                <div>
-                    <button onclick="editWorkshop(${workshop.id})" class="btn-edit">Edit</button>
-                    <button onclick="deleteWorkshop(${workshop.id})" class="btn-delete">Delete</button>
+                <div class="item-content">
+                    <div class="item-title">${workshop.title}</div>
+                    <div class="item-subtitle">
+                        ${workshop.date} | ${workshop.conducted_by}
+                        <span class="badge ${workshop.status === 'completed' ? 'badge-success' : 'badge-warning'}" style="margin-left: 10px;">
+                            ${workshop.status === 'completed' ? '? Past' : '? Upcoming'}
+                        </span>
+                        <span style="margin-left: 10px; color: #666;">
+                            <i class="fas fa-images"></i> ${workshop.image_urls?.length || 0} photos
+                        </span>
+                    </div>
+                </div>
+                <div class="item-actions">
+                    <button onclick="editWorkshop(${workshop.id})" class="btn btn-info btn-icon">
+                        <i class="fas fa-edit"></i> Edit
+                    </button>
+                    <button onclick="deleteWorkshop(${workshop.id})" class="btn btn-danger btn-icon">
+                        <i class="fas fa-trash"></i> Delete
+                    </button>
                 </div>
             </div>
         `).join('');
     };
-
-    // Save workshop
+    
     window.saveWorkshop = async function() {
         const id = document.getElementById('workshop-id').value;
         const title = document.getElementById('workshop-title').value;
@@ -701,7 +1062,6 @@
         
         let image_urls = [];
         
-        // Upload new photos if any
         if (currentWorkshopPhotos.length > 0) {
             try {
                 image_urls = await uploadWorkshopPhotos(id || 'new', currentWorkshopPhotos);
@@ -741,8 +1101,7 @@
             loadWorkshops();
         }
     };
-
-    // Edit workshop
+    
     window.editWorkshop = async function(id) {
         const { data, error } = await supabase
             .from('workshops')
@@ -763,26 +1122,20 @@
         document.getElementById('workshop-status').value = data.status;
         document.getElementById('workshop-order').value = data.display_order || 0;
         
-        // Show existing photos preview
         if (data.image_urls && data.image_urls.length > 0) {
             const preview = document.getElementById('workshop-photo-preview');
             preview.innerHTML = '';
             data.image_urls.forEach(url => {
                 const img = document.createElement('img');
                 img.src = url;
-                img.style.maxWidth = '100px';
-                img.style.maxHeight = '100px';
-                img.style.margin = '5px';
-                img.style.borderRadius = '5px';
                 preview.appendChild(img);
             });
         }
         
-        document.getElementById('workshop-form-title').textContent = 'Edit Workshop';
+        document.getElementById('workshop-form-title').innerHTML = '<i class="fas fa-edit"></i> Edit Workshop';
         currentWorkshopPhotos = [];
     };
-
-    // Delete workshop
+    
     window.deleteWorkshop = async function(id) {
         if (!confirm('Are you sure you want to delete this workshop?')) return;
         
@@ -797,8 +1150,8 @@
             loadWorkshops();
         }
     };
-
-    // Clear workshop form
+    
+    
     window.clearWorkshopForm = function() {
         document.getElementById('workshop-id').value = '';
         document.getElementById('workshop-title').value = '';
@@ -808,26 +1161,10 @@
         document.getElementById('workshop-status').value = 'upcoming';
         document.getElementById('workshop-order').value = '0';
         document.getElementById('workshop-photo-preview').innerHTML = '';
-        document.getElementById('workshop-form-title').textContent = 'Add New Workshop';
+        document.getElementById('workshop-form-title').innerHTML = '<i class="fas fa-plus-circle"></i> Add New Workshop';
         currentWorkshopPhotos = [];
         document.getElementById('workshop-photos').value = '';
     };
-    
-    // Update login function to load workshops
-    // Find this function and add loadWorkshops():
-    window.login = function() {
-        const user = document.getElementById('username').value
-        const pass = document.getElementById('password').value
-        if (user === 'admin' && pass === 'admin123') {
-            document.getElementById('login-form').classList.add('hidden')
-            document.getElementById('admin-panel').classList.remove('hidden')
-            loadSettings()
-            loadTeamMembers()
-            loadWorkshops()  // 👈 ADD THIS LINE
-        } else {
-            alert('Invalid credentials')
-        }
-    }
 </script>
 
 </body>

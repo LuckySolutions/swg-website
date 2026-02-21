@@ -79,7 +79,6 @@
 
 <footer>
     <p id="copyright-text"></p>
-    <p class="address" id="footer-address"></p>
     <div class="footer-social" id="footer-social"></div>
 </footer>
 
@@ -146,15 +145,46 @@
     }
     
     // Render workshop card
+    // Render workshop card
     function renderWorkshopCard(workshop) {
         const images = workshop.image_urls || [];
-        const mainImage = images[0] || 'https://via.placeholder.com/400x300?text=No+Image';
+        const hasImages = images.length > 0;
+        const mainImage = hasImages ? images[0] : 'https://via.placeholder.com/400x300?text=No+Photos+Available';
         
+        // If no images, show a simpler card without gallery section
+        // If no images, show a simpler card without gallery section
+        if (!hasImages) {
+            return `
+                <div class="workshop-card ${workshop.status}" data-workshop="${workshop.id}">
+                    <div class="workshop-details" style="border-top: 4px solid #0a2647;">
+                        <h3>${workshop.title}</h3>
+                        <div class="workshop-meta">
+                            <p><i class="fas fa-calendar-alt"></i> <strong>Date:</strong> ${workshop.date}</p>
+                            <p><i class="fas fa-user-tie"></i> <strong>Conducted by:</strong> ${workshop.conducted_by}</p>
+                        </div>
+                        <p class="workshop-summary">${workshop.description.substring(0, 150)}${workshop.description.length > 150 ? '...' : ''}</p>
+                        <div class="workshop-actions">
+                            <button onclick="window.openWorkshopModal(${workshop.id}, 1)" class="btn-view-details">
+                                <i class="fas fa-info-circle"></i> View Details
+                            </button>
+                            ${workshop.status === 'upcoming' ? 
+                                `<a href="contact.html" class="btn-register">
+                                    <i class="fas fa-calendar-check"></i> Register Interest
+                                </a>` : ''
+                            }
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        
+        // Original card with gallery for workshops that have photos
         return `
             <div class="workshop-card ${workshop.status}" data-workshop="${workshop.id}">
                 <div class="workshop-gallery">
                     <div class="gallery-main">
                         <img src="${mainImage}" alt="${workshop.title}" onclick="window.openWorkshopModal(${workshop.id}, 1)">
+                        ${images.length > 1 ? `<span class="photo-count-badge"><i class="fas fa-images"></i> ${images.length}</span>` : ''}
                     </div>
                     ${images.length > 1 ? `
                         <div class="gallery-thumbnails">
@@ -177,14 +207,14 @@
                     </div>
                     <p class="workshop-summary">${workshop.description.substring(0, 100)}${workshop.description.length > 100 ? '...' : ''}</p>
                     <button onclick="window.openWorkshopModal(${workshop.id}, 1)" class="btn-view-gallery">
-                        <i class="fas fa-images"></i> View Gallery
+                        <i class="fas fa-images"></i> View Gallery (${images.length})
                     </button>
                 </div>
             </div>
         `;
     }
-    
-    // Modal functions
+     
+ // Modal functions
     window.openWorkshopModal = function(workshopId, imageIndex = 1) {
         const workshop = workshopsData[workshopId];
         if (!workshop) return;
@@ -198,24 +228,42 @@
         document.getElementById('modalWorkshopDescription').innerHTML = workshop.description;
         
         const images = workshop.image_urls || [];
-        document.getElementById('modalMainImage').src = images[currentImageIndex] || 'https://via.placeholder.com/800x600?text=No+Image';
+        const galleryContainer = document.querySelector('.modal-gallery-container');
+        const modalArrows = document.querySelectorAll('.modal-arrow');
         
-        const thumbnailsContainer = document.getElementById('modalThumbnails');
-        thumbnailsContainer.innerHTML = '';
-        
-        images.forEach((imgSrc, index) => {
-            const thumb = document.createElement('img');
-            thumb.src = imgSrc;
-            thumb.classList.add('modal-thumb');
-            if (index === currentImageIndex) thumb.classList.add('active');
-            thumb.onclick = () => changeImageTo(index);
-            thumbnailsContainer.appendChild(thumb);
-        });
+        if (images.length === 0) {
+            // Hide the entire gallery container when no photos
+            if (galleryContainer) {
+                galleryContainer.style.display = 'none';
+            }
+        } else {
+            // Show gallery container and populate with photos
+            if (galleryContainer) {
+                galleryContainer.style.display = 'block';
+            }
+            
+            // Show navigation arrows
+            modalArrows.forEach(arrow => arrow.style.display = 'block');
+            
+            document.getElementById('modalMainImage').src = images[currentImageIndex] || 'https://via.placeholder.com/800x600?text=No+Image';
+            
+            const thumbnailsContainer = document.getElementById('modalThumbnails');
+            thumbnailsContainer.innerHTML = '';
+            
+            images.forEach((imgSrc, index) => {
+                const thumb = document.createElement('img');
+                thumb.src = imgSrc;
+                thumb.classList.add('modal-thumb');
+                if (index === currentImageIndex) thumb.classList.add('active');
+                thumb.onclick = () => changeImageTo(index);
+                thumbnailsContainer.appendChild(thumb);
+            });
+        }
         
         document.getElementById('workshopModal').style.display = 'block';
         document.body.style.overflow = 'hidden';
     };
-    
+
     window.changeImage = function(direction) {
         const workshop = workshopsData[currentWorkshop];
         if (!workshop) return;
@@ -243,9 +291,16 @@
         });
     };
     
+    
     window.closeModal = function() {
         document.getElementById('workshopModal').style.display = 'none';
         document.body.style.overflow = 'auto';
+        
+        // Reset gallery visibility for next time
+        const galleryContainer = document.querySelector('.modal-gallery-container');
+        if (galleryContainer) {
+            galleryContainer.style.display = 'block'; // Reset to default
+        }
     };
     
     window.onclick = function(event) {

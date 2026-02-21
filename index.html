@@ -32,7 +32,7 @@
                 <a href="work.html" class="btn">Join Our Workshops</a>
             </div>
             <div class="hero-logo-container">
-                <img src="assets/images/7-Dark SWGI Primary@4x-100 (1).jpg" alt="SWGI Logo" class="hero-logo">
+                <img src="assets/images/logo.jpg" alt="SWGI Logo" class="hero-logo">
             </div>
         </div>
     </section>
@@ -236,11 +236,10 @@
 </main>
 <footer>
     <p id="copyright-text"></p>
-    <p class="address" id="footer-address"></p>
     <div class="footer-social" id="footer-social"></div>
 </footer>
 
-<!-- Add Supabase client library -->
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
@@ -255,7 +254,7 @@
             if (error) throw error;
             
             // Update footer
-            document.getElementById('copyright-text').textContent = data.copyright_text || 'Â© 2026 StraightWay Global Institute. All Rights Reserved.';
+            document.getElementById('copyright-text').textContent = data.copyright_text || '© 2026 StraightWay Global Institute. All Rights Reserved.';
             document.getElementById('footer-address').innerHTML = data.contact_address;
             
             // Footer social icons

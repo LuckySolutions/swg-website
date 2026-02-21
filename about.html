@@ -5,6 +5,239 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Us - StraightWay Global Institute</title>
     <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        /* Mobile responsive improvements */
+        @media (max-width: 768px) {
+            .about {
+                padding: 20px 15px;
+            }
+            
+            .about h1 {
+                font-size: 28px;
+                margin-bottom: 20px;
+            }
+            
+            .about h2 {
+                font-size: 22px;
+                margin: 25px 0 15px;
+            }
+            
+            .about p {
+                font-size: 16px;
+                line-height: 1.6;
+            }
+            
+            /* Team members responsive */
+            #team-members-container {
+                display: flex;
+                flex-direction: column;
+                gap: 25px;
+            }
+            
+            .team-member {
+                display: flex;
+                flex-direction: column;
+                background: #f9f9f9;
+                border-radius: 10px;
+                padding: 20px;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            }
+            
+            .team-photo {
+                width: 150px;
+                height: 150px;
+                border-radius: 50%;
+                object-fit: cover;
+                margin: 0 auto 20px;
+                border: 3px solid #0a2647;
+            }
+            
+            .team-info {
+                text-align: center;
+            }
+            
+            .team-info h3 {
+                color: #0a2647;
+                margin-bottom: 5px;
+                font-size: 20px;
+            }
+            
+            .team-info .name {
+                font-weight: bold;
+                font-size: 18px;
+                margin-bottom: 10px;
+                color: #333;
+            }
+            
+            .team-info p {
+                font-size: 15px;
+                line-height: 1.5;
+                color: #555;
+                text-align: left;
+            }
+            
+            /* Lists responsive */
+            .mission-list,
+            .values-list,
+            .objectives-list {
+                padding-left: 20px;
+            }
+            
+            .mission-list li,
+            .values-list li,
+            .objectives-list li {
+                margin-bottom: 12px;
+                font-size: 16px;
+                line-height: 1.5;
+            }
+            
+            /* CPD badge responsive */
+            .cpd-approved {
+                flex-direction: column;
+                text-align: center;
+                padding: 20px;
+            }
+            
+            .cpd-logo img {
+                max-width: 120px;
+                margin-top: 15px;
+            }
+        }
+        
+        /* Tablet improvements */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .about {
+                padding: 30px 40px;
+            }
+            
+            .team-member {
+                display: flex;
+                gap: 30px;
+                align-items: flex-start;
+            }
+            
+            .team-photo {
+                width: 180px;
+                height: 180px;
+                border-radius: 50%;
+                object-fit: cover;
+                flex-shrink: 0;
+            }
+            
+            .team-info {
+                flex: 1;
+            }
+        }
+        
+        /* Desktop styles */
+        @media (min-width: 1025px) {
+            #team-members-container {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                gap: 30px;
+                margin: 30px 0;
+            }
+            
+            .team-member {
+                background: #f9f9f9;
+                border-radius: 10px;
+                padding: 25px;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+                transition: transform 0.3s ease;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            
+            .team-member:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            }
+            
+            .team-photo {
+                width: 200px;
+                height: 200px;
+                border-radius: 50%;
+                object-fit: cover;
+                margin-bottom: 20px;
+                border: 3px solid #0a2647;
+            }
+            
+            .team-info h3 {
+                color: #0a2647;
+                margin-bottom: 5px;
+                font-size: 22px;
+            }
+            
+            .team-info .name {
+                font-weight: bold;
+                font-size: 18px;
+                margin-bottom: 15px;
+                color: #333;
+            }
+            
+            .team-info p {
+                text-align: left;
+                line-height: 1.6;
+                color: #555;
+            }
+        }
+        
+        /* Common styles */
+        .values-list,
+        .objectives-list,
+        .mission-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        
+        .values-list li,
+        .objectives-list li,
+        .mission-list li {
+            margin-bottom: 12px;
+            padding-left: 25px;
+            position: relative;
+        }
+        
+        .values-list li:before,
+        .objectives-list li:before,
+        .mission-list li:before {
+            content: "•";
+            color: #0a2647;
+            font-weight: bold;
+            position: absolute;
+            left: 5px;
+            font-size: 18px;
+        }
+        
+        .values-list li strong {
+            color: #0a2647;
+        }
+        
+
+        
+        .about {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .about h1 {
+            color: #0a2647;
+            margin-bottom: 30px;
+            font-size: 36px;
+            text-align: center;
+        }
+        
+        .about h2 {
+            color: #0a2647;
+            margin: 40px 0 20px;
+            font-size: 28px;
+            border-bottom: 2px solid #0a2647;
+            padding-bottom: 10px;
+        }
+    </style>
 </head>
 <body>
 
@@ -25,34 +258,76 @@
     <section class="about">
         <h1>About StraightWay Global Institute</h1>
 
-        <p>StraightWay Global Institute is a professional educational platform dedicated to promoting psychological well-being, emotional intelligence, and personal growth through interactive workshops and awareness programs.</p>
+        <!-- About Us -->
+        <h2>About Us</h2>
+        <p>StraightWay Global Institute is a professional education and career development institute dedicated to promoting psychological well-being, emotional intelligence, and personal growth through interactive workshops and awareness programs. The institute focuses on guiding students and young professionals toward clear, structured career pathways through specialized courses, skill programs, and personalized consultations.</p>
         
-        <p>Founded by Ms. Fathima Mishfah, MSc in Health Psychology (Cardiff Metropolitan University, UK), the institute focuses on making psychology accessible and practical for everyday life. Our workshops integrate the latest psychological research with creative, evidence-based approaches such as art therapy, counselling psychology, and mindfulness.</p>
+        <p>Built on the values of clarity, growth, and global opportunity, StraightWay Global Institute empowers learners to make informed decisions and progress confidently toward their future. With an emphasis on modern, globally relevant education and trusted mentorship, the institute serves as a bridge between ambition and achievement.</p>
+        
+        <p>Founded by Ms. Fathima Mishfah, the institute focuses on making psychology accessible and practical for everyday life. Our workshops integrate the latest psychological research with creative, evidence-based approaches such as art therapy, counselling psychology, and mindfulness.</p>
+        
+        <p>At StraightWay Global Institute, we believe that true learning happens through connection — between knowledge and experience, mind and heart, people and purpose.</p>
         
         <!-- CPD Approved Badge -->
+
         <div class="cpd-approved">
-            <div class="cpd-text">
-                <p>
-                    <strong>StraightWay Global Institute is officially CPD Approved.</strong><br>
-                    Our programmes meet internationally recognised Continuing Professional Development (CPD) standards, ensuring quality, credibility, and professional relevance.
-                </p>
+            <div class="cpd-badge-container">
+                <div class="cpd-logo-wrapper">
+                    <div class="cpd-shine"></div>
+                    <img src="assets/images/CPD logo.png" alt="CPD Approved" class="cpd-logo">
+                </div>
             </div>
-            <div class="cpd-logo">
-                <img src="assets/images/CPD logo.png" alt="CPD Approved">
+            <div class="cpd-text-container">
+                <span class="cpd-badge-tag">OFFICIALLY RECOGNIZED</span>
+                <h3 class="cpd-title">CPD <span class="cpd-highlight">Approved</span> Provider</h3>
+                <p class="cpd-description">StraightWay Global Institute is officially CPD Approved. Our programmes meet internationally recognised Continuing Professional Development (CPD) standards, ensuring quality, credibility, and professional relevance.</p>
+                <div class="cpd-certified-stamp">
+                    <span class="stamp-text">✓ CERTIFIED</span>
+                </div>
             </div>
         </div>
 
-        <h2>Our Vision</h2>
+        <!-- Vision -->
+        <h2>Vision</h2>
         <p>To be a trusted and globally connected platform that empowers individuals through psychological knowledge, promoting mental well-being, compassion, and lifelong growth.</p>
 
-        <h2>Our Mission</h2>
+        <!-- Mission -->
+        <h2>Mission</h2>
         <ul class="mission-list">
-            <li>Conduct impactful, research-informed psychological workshops</li>
-            <li>Provide a safe, inclusive learning environment</li>
-            <li>Promote mental health literacy through accessible education</li>
-            <li>Collaborate globally for cross-cultural knowledge exchange</li>
+            <li>To conduct impactful, research-informed psychological workshops that inspire emotional awareness and resilience.</li>
+            <li>To provide a safe, inclusive learning environment that nurtures personal and professional development.</li>
+            <li>To promote mental health literacy through accessible education and creative therapeutic approaches.</li>
+            <li>To collaborate globally for cross-cultural knowledge exchange.</li>
+            <li>To lay the foundation for a multidisciplinary institute specializing in psychology and human development.</li>
         </ul>
 
+        <!-- Core Values -->
+        <h2>Core Values</h2>
+        <ul class="values-list">
+            <li><strong>Empathy</strong> – Centering compassion and understanding in every program.</li>
+            <li><strong>Integrity</strong> – Committing to ethical, evidence-based practices and confidentiality.</li>
+            <li><strong>Growth</strong> – Encouraging continuous learning and personal transformation.</li>
+            <li><strong>Innovation</strong> – Combining science with creativity through modern psychological tools.</li>
+            <li><strong>Connection</strong> – Building bridges between global knowledge and local communities.</li>
+        </ul>
+
+        <!-- Objectives -->
+        <h2>Objectives</h2>
+        <ul class="objectives-list">
+            <li>Conduct professional and community-based psychology workshops, art therapy sessions, and training programs.</li>
+            <li>Develop and certify short-term courses in applied psychology, counselling, and emotional wellness.</li>
+            <li>Collaborate with international universities and experts for academic and research-oriented partnerships.</li>
+            <li>Offer capacity-building and mental health literacy programs for schools, organizations, and institutions.</li>
+            <li>Expand to become a multidisciplinary global education network focused on human growth and innovation.</li>
+        </ul>
+
+        <!-- Mode of Delivery -->
+        <h2>Mode of Delivery</h2>
+        <p>At this initial stage, StraightWay Global Institute will deliver interactive online psychological workshops and certificate programmes to individuals, educators, and organisations.</p>
+        <p>All sessions will be conducted through a secure online platform using live and recorded modules. Participants will receive certificates of completion upon successful participation in workshops.</p>
+        <p>As the institute grows, hybrid and in-person training options will be developed in alignment with Sri Lankan regulatory standards and international educational partnerships.</p>
+
+        <!-- Our Team -->
         <h2>Our Team</h2>
         
         <!-- Team members will be loaded here dynamically -->
@@ -60,14 +335,17 @@
             <!-- Static fallback will be shown if Supabase fails -->
         </div>
 
-        <h2>Mode of Delivery</h2>
-        <p>All sessions are conducted through secure online platforms using live and recorded modules. Participants receive certificates of completion upon successful participation.</p>
+        <!-- Future Outlook -->
+        <h2>Future Outlook</h2>
+        <p>While the current focus remains on psychological workshops and short-term programs, the institute envisions evolving into a recognized international center for psychological education, research, and professional development.</p>
+        <p>Guided by its vision and slogan — 'Connecting Knowledge Across the World' — StraightWay Global Institute aims to bridge academic excellence and human understanding, empowering minds to inspire meaningful change globally.</p>
     </section>
 </main>
 
 <footer>
     <p>&copy; 2026 StraightWay Global Institute. All Rights Reserved.</p>
-    <p class="address">No: 16 1/1, Ediriweera Avenue, Dehiwala, Sri Lanka</p>
+    <div class="footer-social" id="footer-social"></div>
+
 </footer>
 
 <!-- For local development -->
@@ -77,10 +355,11 @@
     }
 </script>
 
+
 <script type="module">
     import { supabase } from './assets/js/supabase.js'
     
-    // Static fallback team members (hardcoded)
+    // Static fallback team members with UPDATED qualifications
     const staticTeamMembers = [
         {
             name: "Ms. Fathima Mishfah",
@@ -104,7 +383,7 @@
             display_order: 3
         }
     ];
-    
+        
     async function loadTeamMembers() {
         const container = document.getElementById('team-members-container');
         if (!container) return;
@@ -139,8 +418,27 @@
         
         // Render team members
         container.innerHTML = teamMembers.map(member => {
-            // Convert newlines to <br> tags
-            const qualifications = member.qualifications.split('\n').join('<br>');
+            // Handle qualifications with proper line break parsing
+            let qualificationsHtml = '';
+            
+            if (member.qualifications) {
+                // Check if qualifications contains actual \n characters or just the string "\n"
+                if (member.qualifications.includes('\\n')) {
+                    // If it contains literal "\n" (like from a textarea), split on that
+                    qualificationsHtml = member.qualifications
+                        .split('\\n')
+                        .map(line => line.trim())
+                        .filter(line => line)  // Remove empty lines
+                        .join('<br>');
+                } else {
+                    // If it contains actual newlines, split on those
+                    qualificationsHtml = member.qualifications
+                        .split('\n')
+                        .map(line => line.trim())
+                        .filter(line => line)  // Remove empty lines
+                        .join('<br>');
+                }
+            }
             
             // Handle photo
             const photoHtml = member.photo_url 
@@ -153,13 +451,13 @@
                     <div class="team-info">
                         <h3>${member.role}</h3>
                         <p class="name">${member.name}</p>
-                        <p>${qualifications}</p>
+                        <p>${qualificationsHtml}</p>
                     </div>
                 </div>
             `;
         }).join('');
     }
-    
+
     // Load team members when page loads
     loadTeamMembers();
 </script>
