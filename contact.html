@@ -139,9 +139,9 @@
             
             // Direct contact note
             document.getElementById('direct-contact-note').innerHTML = `
-                <p>? Email: <strong>${data.contact_email}</strong></p>
-                <p>? <a href="${data.whatsapp_url}" target="_blank">Chat on WhatsApp</a></p>
-            `
+                            <p>📧 Email: <strong>${data.contact_email}</strong></p>
+                            <p>💬 <a href="${data.whatsapp_url}" target="_blank">Chat on WhatsApp</a></p>
+                        `
             
         } catch (error) {
             console.error('Error:', error)
@@ -153,4 +153,5 @@
 </script>
 
 </body>
+
 </html>
