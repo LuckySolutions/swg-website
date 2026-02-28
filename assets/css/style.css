@@ -704,7 +704,35 @@ nav ul li a:hover {
     box-shadow: 0 4px 12px rgba(0,0,0,0.06);
     border-left: 4px solid #6ab187;
 }
+/* Add to your styles section */
+.team-bio {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid #e0e0e0;
+    font-size: 14px;
+    line-height: 1.7;
+    color: #444;
+    text-align: left;
+    background: #f0f0f0;
+    padding: 15px;
+    border-radius: 8px;
+    font-style: normal;
+}
 
+.team-bio p {
+    margin: 0 0 10px 0;
+}
+
+.team-bio p:last-child {
+    margin-bottom: 0;
+}
+
+/* Add a subtle separation between qualifications and bio */
+.qualifications {
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px dashed #ccc;
+}
 .team-photo {
     width: 200px;
     height: 240px;
@@ -737,28 +765,7 @@ nav ul li a:hover {
     line-height: 1.5;
 }
 
-/* Team Mobile */
-@media (max-width: 768px) {
-    .team-member {
-        flex-direction: column;
-        text-align: center;
-        padding: 20px 15px;
-        gap: 20px;
-    }
-    
-    .team-photo {
-        width: 180px;
-        height: 220px;
-    }
-    
-    .team-info {
-        text-align: center;
-    }
-    
-    .team-info h3 {
-        font-size: 1.2rem;
-    }
-}
+
 
 /* -----------------------------
    CPD SECTION
