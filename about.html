@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Us - StraightWay Global Institute</title>
     <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* Mobile responsive improvements */
         @media (max-width: 768px) {
@@ -130,59 +131,226 @@
         }
         
         /* Desktop styles */
-        @media (min-width: 1025px) {
-            #team-members-container {
-                display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-                gap: 30px;
-                margin: 30px 0;
-            }
-            
-            .team-member {
-                background: #f9f9f9;
-                border-radius: 10px;
-                padding: 25px;
-                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-                transition: transform 0.3s ease;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                text-align: center;
-            }
-            
-            .team-member:hover {
-                transform: translateY(-5px);
-                box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            }
-            
-            .team-photo {
-                width: 200px;
-                height: 200px;
-                border-radius: 50%;
-                object-fit: cover;
-                margin-bottom: 20px;
-                border: 3px solid #0a2647;
-            }
-            
-            .team-info h3 {
-                color: #0a2647;
-                margin-bottom: 5px;
-                font-size: 22px;
-            }
-            
-            .team-info .name {
-                font-weight: bold;
-                font-size: 18px;
-                margin-bottom: 15px;
-                color: #333;
-            }
-            
-            .team-info p {
-                text-align: left;
-                line-height: 1.6;
-                color: #555;
-            }
-        }
+        /* Team Members - Clean & Professional */
+/* Team Members - Clean & Professional */
+.team-member {
+    display: flex;
+    align-items: flex-start;
+    gap: 30px;
+    margin-bottom: 30px;
+    padding: 25px;
+    background: #f9f9f9;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    border-left: 4px solid #6ab187;
+}
+
+.team-photo {
+    width: 180px;
+    height: 220px;
+    object-fit: cover;
+    object-position: center top;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    flex-shrink: 0;
+}
+
+.team-info {
+    flex: 1;
+}
+
+/* Name & Role together */
+.team-header {
+    margin-bottom: 15px;
+    border-bottom: 1px solid #eaeaea;
+    padding-bottom: 10px;
+}
+
+.team-header h3 {
+    color: #0a2647;
+    font-size: 1.6rem;
+    margin: 0 0 5px 0;
+    font-weight: 600;
+    font-family: 'Montserrat', 'Poppins', 'Segoe UI', sans-serif;
+    letter-spacing: -0.3px;
+}
+
+.team-header .role {
+    color: #6ab187;
+    font-weight: 500;
+    font-size: 1rem;
+    letter-spacing: 0.5px;
+    font-family: 'Open Sans', 'Roboto', sans-serif;
+    text-transform: uppercase;
+}
+
+/* Qualifications - clean and readable */
+.qualifications-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 20px 0;
+    font-size: 0.9rem;
+    font-family: 'Inter', 'Segoe UI', 'Roboto', sans-serif;
+    color: #2c3e50;
+    text-align: left;
+}
+
+.qualifications-list li {
+    padding: 5px 0 5px 24px;
+    position: relative;
+    color: #2c3e50;
+    line-height: 1.5;
+    border-bottom: 1px solid #edf2f7;
+}
+
+.qualifications-list li:last-child {
+    border-bottom: none;
+}
+
+.qualifications-list li:before {
+    content: "✓";
+    color: #6ab187;
+    position: absolute;
+    left: 0;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+/* Bio - friendly and inviting */
+.team-bio {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: #374151;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #e2e8f0;
+    font-family: 'Lato', 'Open Sans', 'Segoe UI', sans-serif;
+    background: #ffffff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.03);
+}
+
+.bio-text {
+    margin: 0;
+}
+
+.read-more-btn {
+    background: none;
+    border: none;
+    color: #6ab187;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    padding: 8px 0 0 0;
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.read-more-btn:hover {
+    color: #0a2647;
+}
+
+.read-more-btn:after {
+    content: "→";
+    font-size: 1.1rem;
+    transition: transform 0.2s;
+}
+
+.read-more-btn:hover:after {
+    transform: translateX(3px);
+}
+
+/* Override existing desktop styles for team members */
+@media (min-width: 1025px) {
+    #team-members-container {
+        display: block !important;
+        margin: 30px 0;
+    }
+    
+    .team-member {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: flex-start !important;
+        text-align: left !important;
+        background: #f9f9f9;
+        border-radius: 16px;
+        padding: 30px !important;
+        margin-bottom: 30px;
+        transition: all 0.3s ease;
+    }
+    
+    .team-member:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 12px 30px rgba(0,0,0,0.1);
+    }
+    
+    .team-photo {
+        width: 200px !important;
+        height: 240px !important;
+        border-radius: 12px !important;
+        margin-bottom: 0 !important;
+        border: 3px solid white !important;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
+    
+    .team-info {
+        text-align: left !important;
+    }
+    
+    .team-info h3 {
+        text-align: left !important;
+        font-size: 1.8rem;
+    }
+    
+    .team-info .role {
+        text-align: left !important;
+        font-size: 1.1rem;
+    }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .team-member {
+        flex-direction: column;
+        text-align: center;
+        padding: 20px;
+        gap: 20px;
+    }
+    
+    .team-photo {
+        width: 180px;
+        height: 220px;
+        margin: 0 auto;
+        border-radius: 12px;
+    }
+    
+    .team-header {
+        text-align: center;
+    }
+    
+    .team-header h3 {
+        font-size: 1.4rem;
+    }
+    
+    .qualifications-list {
+        text-align: left;
+        max-width: 100%;
+    }
+    
+    .qualifications-list li {
+        text-align: left;
+        font-size: 0.85rem;
+    }
+    
+    .team-bio {
+        text-align: left;
+        font-size: 0.9rem;
+        padding: 12px;
+    }
+}
         
         /* Common styles */
         .values-list,
@@ -338,12 +506,12 @@
         <!-- Future Outlook -->
         <h2>Future Outlook</h2>
         <p>While the current focus remains on psychological workshops and short-term programs, the institute envisions evolving into a recognized international center for psychological education, research, and professional development.</p>
-        <p>Guided by its vision and slogan — 'Connecting Knowledge Across the World' — StraightWay Global Institute aims to bridge academic excellence and human understanding, empowering minds to inspire meaningful change globally.</p>
+        <p>Guided by its vision and slogan — 'Pathway To Purpose' — StraightWay Global Institute aims to bridge academic excellence and human understanding, empowering minds to inspire meaningful change globally.</p>
     </section>
 </main>
 
 <footer>
-    <p>&copy; 2026 StraightWay Global Institute. All Rights Reserved.</p>
+    <p id="copyright-text">&copy; 2026 StraightWay Global Institute. All Rights Reserved.</p>
     <div class="footer-social" id="footer-social"></div>
 
 </footer>
@@ -355,111 +523,143 @@
     }
 </script>
 
-
 <script type="module">
     import { supabase } from './assets/js/supabase.js'
     
-    // Static fallback team members with UPDATED qualifications
-    const staticTeamMembers = [
-        {
-            name: "Ms. Fathima Mishfah",
-            role: "Founder & Director",
-            qualifications: "MSc Health Psychology (Cardiff Metropolitan University, UK)\nBSc Psychology (Cardiff Metropolitan University, UK)\nLicensed Art Therapy Practitioner\nMember – British Psychological Society (BPS)",
-            photo_url: "assets/images/Founder & Director.jpg",
-            display_order: 1
-        },
-        {
-            name: "Mr. Mohamed Ramzan",
-            role: "Co-Director",
-            qualifications: "MEng Electrical and Electronic Engineering (University of the West of England, UK)\nMIET (UK)",
-            photo_url: "assets/images/Co Director.jpg",
-            display_order: 2
-        },
-        {
-            name: "Ms. A. S. F. Aathika",
-            role: "Chief Operating Officer (COO)",
-            qualifications: "BSc Psychology (Cardiff Metropolitan University, UK)\nPGCE in Education\nDiploma in Education Management and Leadership",
-            photo_url: null,
-            display_order: 3
-        }
-    ];
-        
-    async function loadTeamMembers() {
-        const container = document.getElementById('team-members-container');
-        if (!container) return;
-        
-        let teamMembers = [];
-        let error = null;
-        
-        // Try to load from Supabase
+    async function loadSiteSettings() {
         try {
-            const { data, error: supabaseError } = await supabase
-                .from('team_members')
+            const { data, error } = await supabase
+                .from('site_settings')
                 .select('*')
-                .order('display_order', { ascending: true });
+                .eq('id', 1)
+                .single()
             
-            if (supabaseError) {
-                throw supabaseError;
-            }
+            if (error) throw error
             
-            if (data && data.length > 0) {
-                teamMembers = data;
-                console.log('✅ Loaded team from Supabase');
-            } else {
-                throw new Error('No data');
-            }
-        } catch (err) {
-            console.warn('⚠️ Using static team members (Supabase error):', err);
-            teamMembers = staticTeamMembers;
-        }
-        
-        // Sort by display_order just to be sure
-        teamMembers.sort((a, b) => (a.display_order || 999) - (b.display_order || 999));
-        
-        // Render team members
-        container.innerHTML = teamMembers.map(member => {
-            // Handle qualifications with proper line break parsing
-            let qualificationsHtml = '';
+            // ========== FOOTER (EXACTLY LIKE CONTACT.HTML) ==========
+            // Footer copyright
+            document.getElementById('copyright-text').textContent = data.copyright_text || '© 2026 StraightWay Global Institute. All Rights Reserved.'
             
-            if (member.qualifications) {
-                // Check if qualifications contains actual \n characters or just the string "\n"
-                if (member.qualifications.includes('\\n')) {
-                    // If it contains literal "\n" (like from a textarea), split on that
-                    qualificationsHtml = member.qualifications
-                        .split('\\n')
-                        .map(line => line.trim())
-                        .filter(line => line)  // Remove empty lines
-                        .join('<br>');
-                } else {
-                    // If it contains actual newlines, split on those
-                    qualificationsHtml = member.qualifications
-                        .split('\n')
-                        .map(line => line.trim())
-                        .filter(line => line)  // Remove empty lines
-                        .join('<br>');
+            // Footer social icons - EXACT same as contact.html
+            const socialLinks = []
+            if (data.facebook_url) socialLinks.push({ name: 'Facebook', url: data.facebook_url, icon: 'fab fa-facebook-f' })
+            if (data.instagram_url) socialLinks.push({ name: 'Instagram', url: data.instagram_url, icon: 'fab fa-instagram' })
+            if (data.whatsapp_url) socialLinks.push({ name: 'WhatsApp', url: data.whatsapp_url, icon: 'fab fa-whatsapp' })
+            if (data.linkedin_url) socialLinks.push({ name: 'LinkedIn', url: data.linkedin_url, icon: 'fab fa-linkedin-in' })
+            socialLinks.push({ name: 'Email', url: `mailto:${data.contact_email}`, icon: 'fas fa-envelope' })
+            
+            const footerIcons = socialLinks.map(s => {
+                let icon = s.icon
+                if (s.name === 'Facebook') icon = 'fab fa-facebook'
+                if (s.name === 'Instagram') icon = 'fab fa-instagram'
+                if (s.name === 'WhatsApp') icon = 'fab fa-whatsapp'
+                if (s.name === 'LinkedIn') icon = 'fab fa-linkedin'
+                if (s.name === 'Email') icon = 'fas fa-envelope'
+                return `<a href="${s.url}" target="_blank"><i class="${icon}"></i></a>`
+            }).join('')
+            document.getElementById('footer-social').innerHTML = footerIcons
+            
+            // ========== TEAM MEMBERS (KEEP YOUR EXISTING CODE) ==========
+            // Static fallback team members
+            const staticTeamMembers = [
+                {
+                    name: "Ms. Fathima Mishfah",
+                    role: "Founder & Director",
+                    qualifications: "MSc Health Psychology (Cardiff Metropolitan University, UK)\nBSc Psychology (Cardiff Metropolitan University, UK)\nLicensed Art Therapy Practitioner\nMember – British Psychological Society (BPS)",
+                    bio: "Ms. Fathima Mishfah is a psychology practitioner, Certified Art Therapist, and experienced educator dedicated to advancing emotional wellbeing and inclusive mental health support. With an MSc in Health Psychology from Cardiff Metropolitan University, UK, she has served as Sectional Head, Student Counsellor, School Psychologist, and Assistant Psychologist. Her clinical experience includes psychological assessments, court-related reports, and therapeutic work with SEN/SEND learners. As a Certified Art Therapy Practitioner, she integrates creative methods with psychological science. Member of BPS and ANZMHA.",
+                    photo_url: "assets/images/Founder & Director.jpg",
+                    display_order: 1
+                },
+                {
+                    name: "Mr. Mohamed Ramzan",
+                    role: "Co-Director",
+                    qualifications: "MEng Electrical and Electronic Engineering (University of the West of England, UK)\nMIET (UK)",
+                    bio: "Mr. Mohamed Ramzan oversees strategic operations and institutional development at StraightWay Global Institute. With an MEng in Electrical and Electronic Engineering from the University of the West of England, UK, and MIET status, he brings systems thinking and analytical expertise to drive operational efficiency and sustainable global collaboration. His professional approach emphasizes innovation, quality assurance, and strategic partnerships, ensuring the institute maintains high standards of integrity while expanding its global reach.",
+                    photo_url: "assets/images/Co Director.jpg",
+                    display_order: 2
+                },
+                {
+                    name: "Ms. A. S. F. Aathika",
+                    role: "Chief Operating Officer (COO)",
+                    qualifications: "BSc Psychology (Cardiff Metropolitan University, UK)\nPGCE in Education\nDiploma in Education Management and Leadership",
+                    bio: "Ms. A. S. F. Aathika brings extensive experience in curriculum development, student counselling, and special needs education. With a BSc in Psychology from Cardiff Metropolitan University, UK, PGCE in Education, and Diploma in Education Management and Leadership, she specializes in behaviour management, differentiated instruction, and Individualized Education Plans (IEPs). At StraightWay Global Institute, she oversees academic and operational development, ensuring programs reflect accessibility, compassion, and global connection.",
+                    photo_url: null,
+                    display_order: 3
                 }
+            ];
+            
+            // Load team members
+            const container = document.getElementById('team-members-container');
+            if (container) {
+                let teamMembers = [];
+                
+                try {
+                    const { data: teamData, error: teamError } = await supabase
+                        .from('team_members')
+                        .select('*')
+                        .order('display_order', { ascending: true });
+                    
+                    if (teamError) throw teamError;
+                    
+                    if (teamData && teamData.length > 0) {
+                        teamMembers = teamData;
+                        console.log('✅ Loaded team from Supabase');
+                    } else {
+                        throw new Error('No data');
+                    }
+                } catch (err) {
+                    console.warn('⚠️ Using static team members:', err);
+                    teamMembers = staticTeamMembers;
+                }
+                
+                teamMembers.sort((a, b) => (a.display_order || 999) - (b.display_order || 999));
+                
+                container.innerHTML = teamMembers.map(member => {
+                    let qualificationsItems = '';
+                    if (member.qualifications) {
+                        const quals = member.qualifications
+                            .replace(/\\n/g, '\n')
+                            .split('\n')
+                            .map(q => q.trim())
+                            .filter(q => q);
+                        
+                        qualificationsItems = quals.map(q => `<li>${q}</li>`).join('');
+                    }
+                    
+                    const photoHtml = member.photo_url 
+                        ? `<img src="${member.photo_url}" alt="${member.name}" class="team-photo">`
+                        : '<div class="team-photo-placeholder"></div>';
+                    
+                    return `
+                        <div class="team-member">
+                            ${photoHtml}
+                            <div class="team-info">
+                                <div class="team-header">
+                                    <h3>${member.name}</h3>
+                                    <div class="role">${member.role}</div>
+                                </div>
+                                <ul class="qualifications-list">
+                                    ${qualificationsItems}
+                                </ul>
+                                ${member.bio ? `
+                                    <div class="team-bio">
+                                        <p class="bio-text">${member.bio}</p>
+                                    </div>
+                                ` : ''}
+                            </div>
+                        </div>
+                    `;
+                }).join('');
             }
             
-            // Handle photo
-            const photoHtml = member.photo_url 
-                ? `<img src="${member.photo_url}" alt="${member.name}" class="team-photo">`
-                : '';
-            
-            return `
-                <div class="team-member">
-                    ${photoHtml}
-                    <div class="team-info">
-                        <h3>${member.role}</h3>
-                        <p class="name">${member.name}</p>
-                        <p>${qualificationsHtml}</p>
-                    </div>
-                </div>
-            `;
-        }).join('');
+        } catch (error) {
+            console.error('Error:', error);
+            // Fallback footer
+            document.getElementById('copyright-text').textContent = '© 2026 StraightWay Global Institute. All Rights Reserved.';
+        }
     }
-
-    // Load team members when page loads
-    loadTeamMembers();
+    
+    loadSiteSettings();
 </script>
 
 </body>

@@ -539,7 +539,11 @@
                     <textarea id="team-qualifications" rows="4" required placeholder="One per line"></textarea>
                     <small class="help-text">Enter each qualification on a new line</small>
                 </div>
-                
+                <div class="form-group">
+                    <label>Bio *</label>
+                    <textarea id="team-bio" rows="4" required placeholder="Professional biography..."></textarea>
+                    <small class="help-text">Brief professional background and expertise</small>
+                </div>
                 <div class="form-row">
                     <div class="form-group">
                         <label>Display Order</label>
@@ -835,9 +839,10 @@
         const name = document.getElementById('team-name').value;
         const role = document.getElementById('team-role').value;
         const qualifications = document.getElementById('team-qualifications').value;
+        const bio = document.getElementById('team-bio').value; // NEW
         const display_order = parseInt(document.getElementById('team-order').value) || 0;
         
-        if (!name || !role || !qualifications) {
+        if (!name || !role || !qualifications || !bio) {
             alert('Please fill all required fields');
             return;
         }
@@ -869,6 +874,7 @@
             name,
             role,
             qualifications,
+            bio, // NEW
             display_order,
             ...(photo_url && { photo_url })
         };
@@ -894,6 +900,8 @@
         }
     };
     
+
+
     window.editTeamMember = async function(id) {
         const { data, error } = await supabase
             .from('team_members')
@@ -910,6 +918,7 @@
         document.getElementById('team-name').value = data.name;
         document.getElementById('team-role').value = data.role;
         document.getElementById('team-qualifications').value = data.qualifications;
+        document.getElementById('team-bio').value = data.bio || ''; // NEW
         document.getElementById('team-order').value = data.display_order || 0;
         
         if (data.photo_url) {
@@ -920,7 +929,8 @@
         document.getElementById('team-form-title').innerHTML = '<i class="fas fa-user-edit"></i> Edit Team Member';
         currentPhotoFile = null;
     };
-    
+
+
     window.deleteTeamMember = async function(id) {
         if (!confirm('Are you sure you want to delete this team member?')) return;
         
@@ -941,13 +951,14 @@
         document.getElementById('team-name').value = '';
         document.getElementById('team-role').value = '';
         document.getElementById('team-qualifications').value = '';
+        document.getElementById('team-bio').value = ''; // NEW
         document.getElementById('team-order').value = '0';
         document.getElementById('photo-preview').innerHTML = '';
         document.getElementById('team-form-title').innerHTML = '<i class="fas fa-user-plus"></i> Add New Team Member';
         currentPhotoFile = null;
         document.getElementById('team-photo').value = '';
     };
-    
+        
     // ==================== WORKSHOPS ====================
     let currentWorkshopPhotos = [];
     

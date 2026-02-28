@@ -244,5 +244,59 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="assets/js/script.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="assets/js/script.js"></script>
+
+<!-- ADD THIS NEW SCRIPT -->
+<script type="module">
+    import { supabase } from './assets/js/supabase.js'
+    
+    async function loadFooter() {
+        try {
+            const { data, error } = await supabase
+                .from('site_settings')
+                .select('*')
+                .eq('id', 1)
+                .single()
+            
+            if (error) throw error
+            
+            // Footer copyright
+            const copyrightEl = document.getElementById('copyright-text');
+            if (copyrightEl) {
+                copyrightEl.textContent = data.copyright_text || '© 2026 StraightWay Global Institute. All Rights Reserved.';
+            }
+            
+            // Footer social links
+            const socialLinks = []
+            if (data.facebook_url) socialLinks.push({ name: 'Facebook', url: data.facebook_url, icon: 'fab fa-facebook' })
+            if (data.instagram_url) socialLinks.push({ name: 'Instagram', url: data.instagram_url, icon: 'fab fa-instagram' })
+            if (data.whatsapp_url) socialLinks.push({ name: 'WhatsApp', url: data.whatsapp_url, icon: 'fab fa-whatsapp' })
+            if (data.linkedin_url) socialLinks.push({ name: 'LinkedIn', url: data.linkedin_url, icon: 'fab fa-linkedin' })
+            if (data.contact_email) socialLinks.push({ name: 'Email', url: `mailto:${data.contact_email}`, icon: 'fas fa-envelope' })
+            
+            const footerIcons = socialLinks.map(s => 
+                `<a href="${s.url}" target="_blank"><i class="${s.icon}"></i></a>`
+            ).join('')
+            
+            const footerSocial = document.getElementById('footer-social');
+            if (footerSocial) {
+                footerSocial.innerHTML = footerIcons
+            }
+            
+        } catch (error) {
+            console.error('Error loading footer:', error)
+            // Fallback
+            const copyrightEl = document.getElementById('copyright-text');
+            if (copyrightEl) {
+                copyrightEl.textContent = '© 2026 StraightWay Global Institute. All Rights Reserved.';
+            }
+        }
+    }
+    
+    loadFooter()
+</script>
+
 </body>
 </html>
