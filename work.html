@@ -162,7 +162,7 @@
                             <p><i class="fas fa-calendar-alt"></i> <strong>Date:</strong> ${workshop.date}</p>
                             <p><i class="fas fa-user-tie"></i> <strong>Conducted by:</strong> ${workshop.conducted_by}</p>
                         </div>
-                        <p class="workshop-summary">${workshop.description.substring(0, 150)}${workshop.description.length > 150 ? '...' : ''}</p>
+                        <p class="workshop-summary">${workshop.description.replace(/\n/g, ' ').substring(0, workshop.status === 'upcoming' ? 150 : 100)}${workshop.description.length > (workshop.status === 'upcoming' ? 150 : 100) ? '...' : ''}</p>                        
                         <div class="workshop-actions">
                             <button onclick="window.openWorkshopModal(${workshop.id}, 1)" class="btn-view-details">
                                 <i class="fas fa-info-circle"></i> View Details
@@ -205,7 +205,7 @@
                         <p><i class="fas fa-calendar-alt"></i> <strong>Date:</strong> ${workshop.date}</p>
                         <p><i class="fas fa-user-tie"></i> <strong>Conducted by:</strong> ${workshop.conducted_by}</p>
                     </div>
-                    <p class="workshop-summary">${workshop.description.substring(0, 100)}${workshop.description.length > 100 ? '...' : ''}</p>
+                    <p class="workshop-summary">${workshop.description.replace(/\n/g, ' ').substring(0, workshop.status === 'upcoming' ? 150 : 100)}${workshop.description.length > (workshop.status === 'upcoming' ? 150 : 100) ? '...' : ''}</p>                    
                     <button onclick="window.openWorkshopModal(${workshop.id}, 1)" class="btn-view-gallery">
                         <i class="fas fa-images"></i> View Gallery (${images.length})
                     </button>
@@ -225,7 +225,7 @@
         document.getElementById('modalWorkshopTitle').textContent = workshop.title;
         document.getElementById('modalWorkshopMeta').textContent = 
             `${workshop.date} | ${workshop.conducted_by}`;
-        document.getElementById('modalWorkshopDescription').innerHTML = workshop.description;
+        document.getElementById('modalWorkshopDescription').innerHTML = workshop.description.replace(/\n/g, '<br>');
         
         const images = workshop.image_urls || [];
         const galleryContainer = document.querySelector('.modal-gallery-container');

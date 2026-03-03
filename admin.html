@@ -917,8 +917,8 @@
         document.getElementById('team-id').value = data.id;
         document.getElementById('team-name').value = data.name;
         document.getElementById('team-role').value = data.role;
-        document.getElementById('team-qualifications').value = data.qualifications;
-        document.getElementById('team-bio').value = data.bio || ''; // NEW
+        document.getElementById('team-qualifications').value = data.qualifications ? data.qualifications.replace(/\\n/g, '\n') : '';
+        document.getElementById('team-bio').value = data.bio ? data.bio.replace(/\\n/g, '\n') : '';
         document.getElementById('team-order').value = data.display_order || 0;
         
         if (data.photo_url) {
