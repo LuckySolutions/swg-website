@@ -51,7 +51,7 @@
             </div>
         </div>
         
-        <div class="direct-contact-note" id="direct-contact-note"></div>
+
     </section>
 </main>
 
@@ -137,11 +137,7 @@
             }).join('')
             document.getElementById('footer-social').innerHTML = footerIcons
             
-            // Direct contact note
-            document.getElementById('direct-contact-note').innerHTML = `
-                <p>📧 Email: <strong>${data.contact_email}</strong></p>
-                <p>💬 <a href="${data.whatsapp_url}" target="_blank">Chat on WhatsApp</a></p>
-            `
+        
             
         } catch (error) {
             console.error('Error:', error)
@@ -155,5 +151,4 @@
 
 
 </body>
-
 </html>
